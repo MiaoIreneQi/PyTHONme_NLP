@@ -4,7 +4,9 @@
 
 # Temporary message: Hey guys, this is a python file. Please type your codes below.
 
-import requests
+
+import re
+import requests 
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
@@ -27,3 +29,7 @@ with open('transcript1.pickle','wb') as trumpscript:
 
 with open('transcript1.pickle','rb') as trumpscript:
     transcript1=pickle.load(trumpscript)
+
+print(transcript1)
+
+
