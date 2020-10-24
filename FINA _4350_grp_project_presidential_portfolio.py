@@ -1,6 +1,6 @@
 # Group: PyTHONme_NLP
 # Project topic: presidential portfolio
-# Authors in collaboration: QI Miao Irene, CHEN Jingshu David, JIANG Binghan, BAO Enqi Bruce
+# Authors in collaboration: QI Miao Irene, CHEN Jingshu David, JIANG Binghan Stephanie, BAO Enqi Bruce
 
 # Temporary message: Hey guys, this is a python file. Please type your codes below.
 
