@@ -1,8 +1,10 @@
 # Group: PyTHONme_NLP
-# Project topic: presidential portfolio
+# Project topic: presidential portfolio construction
 # Authors in collaboration: QI Miao Irene, CHEN Jingshu David, JIANG Binghan Stephanie, BAO Enqi Bruce
 
 # Temporary message: Hey guys, this is a python file. Please type your codes below.
+
+#Object1: main branch - web scrapping from webpage: https://www.rev.com/blog/transcript-category/donald-trump-transcripts
 
 #to start with, import packages needed. 
 import requests
