@@ -79,4 +79,4 @@ for web in web_list:
 for sublist in title_list:
     sublist.remove(''Help Us Improve the Rev Transcript Library!')
 
-title_list_unnested = [item in sublist in title_list for item in sublist]
+title_list_unnested = [item for sublist in title_list for item in sublist]
