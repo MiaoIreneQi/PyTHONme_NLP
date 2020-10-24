@@ -70,3 +70,13 @@ for link in web_list:
         
         for item in title_p:
             address.requests(item, timeout=5)
+       
+
+title_list = []
+for web in web_list:
+    title_list.append([tag.text for tag in BeautifulSoup(requests.get(web).text).find_all('strong')])
+    
+for sublist in title_list:
+    sublist.remove(''Help Us Improve the Rev Transcript Library!')
+
+title_list_unnested = [item in sublist in title_list for item in sublist]
