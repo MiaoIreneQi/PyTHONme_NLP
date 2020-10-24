@@ -91,3 +91,4 @@ for sublist in title_list:
 title_list_unnested = [item for sublist in title_list for item in sublist]
 
 import string
+ex_ti.lower().translate(str.maketrans('','',string.punctuation))
