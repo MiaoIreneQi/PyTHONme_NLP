@@ -4,21 +4,26 @@
 
 # Temporary message: Hey guys, this is a python file. Please type your codes below.
 
+#to start with, import packages needed. 
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
 import nltk
 from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
+
 # We first scrape the transcripts of Trump's past speeches.
 transcript = 'https://www.rev.com/blog/transcripts/{}'
 final_debate_raw = requests.get(transcript.format('donald-trump-joe-biden-final-presidential-debate-transcript-2020')).text
+
 # Obviously, we will end up with something very messy from the step above, so we do some cleaning.
 final_debate_s = BeautifulSoup(final_debate_raw, 'lxml')
 cleaned_text_final_debate = [tag.text for tag in final_debate_s.find_all('p')]
 
+#merge text into one single file.
 single = ''.join(cleaned_text_final_debate)
 
+#save the transcript to file trumscript, using pickle.
 import pickle
 
 transcript1 = regexp_tokenize(single, r'(\w+)')
@@ -30,7 +35,7 @@ with open('transcript1.pickle','rb') as trumpscript:
 
     
     
-    # Obtain the title of each page for page 1    
+# Obtain the title of each page for page 1    
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -71,12 +76,14 @@ for link in web_list:
         for item in title_p:
             address.requests(item, timeout=5)
        
-
+#creat a list to contain all the titles from all the pages (loop) : 
 title_list = []
 for web in web_list:
     title_list.append([tag.text for tag in BeautifulSoup(requests.get(web).text).find_all('strong')])
-    
+
+#remove the unnecessary titles from the list (loop): 
 for sublist in title_list:
     sublist.remove(''Help Us Improve the Rev Transcript Library!')
 
+#from list in list to one list.
 title_list_unnested = [item for sublist in title_list for item in sublist]
