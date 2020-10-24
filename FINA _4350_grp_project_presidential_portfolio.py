@@ -17,6 +17,7 @@ final_debate_s = BeautifulSoup(final_debate_raw, 'lxml')
 cleaned_text_final_debate = [tag.text for tag in final_debate_s.find_all('p')]
 
 single = ''.join(cleaned_text_final_debate)
+
 import pickle
 
 transcript1 = regexp_tokenize(single, r'(\w+|\d+|\S|.)')
