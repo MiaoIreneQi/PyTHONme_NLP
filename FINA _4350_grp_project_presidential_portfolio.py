@@ -95,3 +95,71 @@ import string
 re.sub(r' ', r'-', ex_ti.lower().translate(str.maketrans('','',string.punctuation)))
                    
 
+
+
+
+
+#### The followings are the start of our FORMAL coding lol:
+
+# Step 1: obtain the titles in Page 1
+r = \
+    requests.get(
+        'https://www.rev.com/blog/transcript-category/donald-trump-transcripts?view=all', timeout=5)
+    
+clean_transcript_p1 = BeautifulSoup(r.text, 'lxml')
+
+tag_name_list = {tag.name for tag in clean_transcript_p1.find_all(True)}
+
+title_p1 = {tag.text for tag in clean_transcript_p1.find_all(['strong'])}
+title_p1.remove("Help Us Improve the Rev Transcript Library!")
+
+
+
+# Step 2.1 Creating https for turining the pages (2-33)
+address = "https://www.rev.com/blog/transcript-category/donald-trump-transcripts/page/{}?view=all"
+
+web_list = []
+for i in range (2,34):
+    web_list.append(address.format(i)) 
+
+
+
+# Step 2.2 Obtaining the titles in Page 2-33
+
+title_list = []
+for web in web_list:
+    title_list.append([tag.text for tag in BeautifulSoup(requests.get(web).text).find_all('strong')])
+
+    # remove the unnecessary titles from the list (loop): 
+for sublist in title_list:
+    sublist.remove(''Help Us Improve the Rev Transcript Library!')
+
+    # from list in list to one list.
+title_list_unnested = [item for sublist in title_list for item in sublist]
+
+
+
+# Step 2.3 Combine the title lists of page 1 and page 2-33
+
+title_list_unnested = title_p1 + title_list_unnested
+
+
+
+# Step 3 Parsing the titles
+import re
+import string             
+   # remove punctuations and change upper case to lower case
+title_list_unnested_no_punct = []
+for item in title_list_unnested: 
+    title_list_unnested_no_punct.append\
+        (item.lower().translate(str.maketrans('','',string.punctuation)))
+   # remove quotation mark     
+title_list_unnested_no_punct_no_quote = []
+for name in title_list_unnested_no_punct:
+    title_list_unnested_no_punct_no_quote.append\
+        (''.join(item for item in name if item not in (r"’")))
+   # substitute blank spaces with hyphen.
+title_list_final = []
+for name in title_list_unnested_no_punct_no_quote:
+    title_list_final.append(re.sub(r' ',r'-',name))
+                
