@@ -15,3 +15,13 @@ final_debate_raw = requests.get(transcript.format('donald-trump-joe-biden-final-
 # Obviously, we will end up with something very messy from the step above, so we do some cleaning.
 final_debate_s = BeautifulSoup(final_debate_raw, 'lxml')
 cleaned_text_final_debate = [tag.text for tag in final_debate_s.find_all('p')]
+
+single = ''.join(cleaned_text_final_debate)
+import pickle
+
+transcript1 = regexp_tokenize(single, r'(\w+|\d+|\S|.)')
+with open('transcript1.pickle','wb') as trumpscript:
+    pickle.dump(transcript1,trumpscript,pickle.HIGHEST_PROTOCOL)
+
+with open('transcript1.pickle','rb') as trumpscript:
+    transcript1=pickle.load(trumpscript)
