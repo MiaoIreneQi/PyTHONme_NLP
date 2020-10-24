@@ -117,7 +117,7 @@ clean_transcript_p1 = BeautifulSoup(r.text, 'lxml')
 
 tag_name_list = {tag.name for tag in clean_transcript_p1.find_all(True)}
 
-title_p1 = {tag.text for tag in clean_transcript_p1.find_all(['strong'])}
+title_p1 = [tag.text for tag in clean_transcript_p1.find_all(['strong'])]
 title_p1.remove("Help Us Improve the Rev Transcript Library!")
 
 
