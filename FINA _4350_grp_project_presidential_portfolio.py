@@ -93,3 +93,5 @@ title_list_unnested = [item for sublist in title_list for item in sublist]
 #remove all the punctuations from all the titles, and change then into lowercase letters. Then substitute all the spaces with '-'.
 import string
 re.sub(r' ', r'-', ex_ti.lower().translate(str.maketrans('','',string.punctuation)))
+                   
+
