@@ -89,3 +89,5 @@ for sublist in title_list:
 
 #from list in list to one list.
 title_list_unnested = [item for sublist in title_list for item in sublist]
+
+import string
