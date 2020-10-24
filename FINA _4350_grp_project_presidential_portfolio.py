@@ -20,7 +20,7 @@ single = ''.join(cleaned_text_final_debate)
 
 import pickle
 
-transcript1 = regexp_tokenize(single, r'(\w+|\d+|\S|.)')
+transcript1 = regexp_tokenize(single, r'(\w+\S)')
 with open('transcript1.pickle','wb') as trumpscript:
     pickle.dump(transcript1,trumpscript,pickle.HIGHEST_PROTOCOL)
 
