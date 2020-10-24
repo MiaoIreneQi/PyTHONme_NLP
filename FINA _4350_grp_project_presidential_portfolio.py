@@ -102,6 +102,13 @@ re.sub(r' ', r'-', ex_ti.lower().translate(str.maketrans('','',string.punctuatio
 #### The followings are the start of our FORMAL coding lol:
 
 # Step 1: obtain the titles in Page 1
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+import numpy as np
+import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
+                   
 r = \
     requests.get(
         'https://www.rev.com/blog/transcript-category/donald-trump-transcripts?view=all', timeout=5)
