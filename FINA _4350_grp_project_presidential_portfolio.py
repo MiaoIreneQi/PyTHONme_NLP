@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
 import nltk
+from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
 # We first scrape the transcripts of Trump's past speeches.
 transcript = 'https://www.rev.com/blog/transcripts/{}'
 final_debate_raw = requests.get(transcript.format('donald-trump-joe-biden-final-presidential-debate-transcript-2020')).text
