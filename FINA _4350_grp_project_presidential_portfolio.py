@@ -22,6 +22,8 @@ final_debate_raw = requests.get(transcript.format('donald-trump-joe-biden-final-
 final_debate_s = BeautifulSoup(final_debate_raw, 'lxml')
 cleaned_text_final_debate = [tag.text for tag in final_debate_s.find_all('p')]
 
+#if we come across an empty set, that is an exception with different address. 
+
 #merge text into one single file.
 single = ''.join(cleaned_text_final_debate)
 
