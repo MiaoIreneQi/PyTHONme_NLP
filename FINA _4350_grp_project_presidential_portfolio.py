@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
 import nltk
+
 from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
 # We first scrape the transcripts of Trump's past speeches.
 transcript = 'https://www.rev.com/blog/transcripts/{}'
@@ -20,8 +21,7 @@ cleaned_text_final_debate = [tag.text for tag in final_debate_s.find_all('p')]
 single = ''.join(cleaned_text_final_debate)
 
 import pickle
-
-transcript1 = regexp_tokenize(single, r'(\w+\S)')
+transcript1 = regexp_tokenize(single, r'(\w*\S)')
 with open('transcript1.pickle','wb') as trumpscript:
     pickle.dump(transcript1,trumpscript,pickle.HIGHEST_PROTOCOL)
 
