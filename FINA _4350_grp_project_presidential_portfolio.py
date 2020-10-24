@@ -139,7 +139,7 @@ for web in web_list:
 
     # remove the unnecessary titles from the list (loop): 
 for sublist in title_list:
-    sublist.remove(''Help Us Improve the Rev Transcript Library!')
+    sublist.remove("Help Us Improve the Rev Transcript Library!")
 
     # from list in list to one list.
 title_list_unnested = [item for sublist in title_list for item in sublist]
