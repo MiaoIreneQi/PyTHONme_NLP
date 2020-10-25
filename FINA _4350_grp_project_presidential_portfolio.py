@@ -159,7 +159,7 @@ transcirpt_href_list_p2_p33_unnested = [item for sublist in transcirpt_href_list
 # Step 2.3 Combine the title lists of page 1 and page 2-33
 
 title_list_unnested = title_p1 + title_list_unnested
-transcirpt_href_list_p2_p33_unnested = transcript_href_list_page1 + transcirpt_href_list_p2_p33_unnested
+transcirpt_href_list_p1_p33_unnested = transcript_href_list_page1 + transcirpt_href_list_p2_p33_unnested
 
 
 
