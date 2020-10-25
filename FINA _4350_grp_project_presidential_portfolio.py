@@ -116,7 +116,9 @@ r = \
         'https://www.rev.com/blog/transcript-category/donald-trump-transcripts?view=all', timeout=5)
     
 clean_transcript_p1 = BeautifulSoup(r.text, 'lxml')
-
+href_list_page1 = [tag.get('href') for tag in clean_transcript_p1.find_all('a')]
+transcript_href_list_page1 = [element for element in href_list_page1 if 'https://www.rev.com/blog/transcripts/' in element]                
+               
 tag_name_list = {tag.name for tag in clean_transcript_p1.find_all(True)}
 
 title_p1 = [tag.text for tag in clean_transcript_p1.find_all(['strong'])]
@@ -136,8 +138,13 @@ for i in range (2,34):
 # Step 2.2 Obtaining the titles in Page 2-33
 
 title_list = []
+transcirpt_href_list_p2_p33 = []                   
 for web in web_list:
-    title_list.append([tag.text for tag in BeautifulSoup(requests.get(web).text).find_all('strong')])
+    r = requests.get(web, timeout=5)
+    clean_transcript = BeautifulSoup(r.text, 'lxml')
+    title_list.append([tag.text for tag in clean_transcript.find_all('strong')])
+    href_list_web = [tag.get('href') for tag in clean_transcript.find_all('a')]
+    transcirpt_href_list_p2_p33.append([element for element in href_list_web if 'https://www.rev.com/blog/transcripts/' in element]
 
     # remove the unnecessary titles from the list (loop): 
 for sublist in title_list:
@@ -145,30 +152,32 @@ for sublist in title_list:
 
     # from list in list to one list.
 title_list_unnested = [item for sublist in title_list for item in sublist]
+transcirpt_href_list_p2_p33_unnested = [item for sublist in transcirpt_href_list_p2_p33 for item in sublist]
 
 
 
 # Step 2.3 Combine the title lists of page 1 and page 2-33
 
 title_list_unnested = title_p1 + title_list_unnested
+transcirpt_href_list_p2_p33_unnested = transcript_href_list_page1 + transcirpt_href_list_p2_p33_unnested
 
 
 
 # Step 3 Parsing the titles
-import re
-import string             
+#import re
+#import string             
    # remove punctuations and change upper case to lower case
-title_list_unnested_no_punct = []
-for item in title_list_unnested: 
-    title_list_unnested_no_punct.append\
-        (item.lower().translate(str.maketrans('','',string.punctuation)))
+#title_list_unnested_no_punct = []
+#for item in title_list_unnested: 
+    #title_list_unnested_no_punct.append\
+        #(item.lower().translate(str.maketrans('','',string.punctuation)))
    # remove quotation mark     
-title_list_unnested_no_punct_no_quote = []
-for name in title_list_unnested_no_punct:
-    title_list_unnested_no_punct_no_quote.append\
-        (''.join(item for item in name if item not in (r"’")))
+#title_list_unnested_no_punct_no_quote = []
+#for name in title_list_unnested_no_punct:
+    #title_list_unnested_no_punct_no_quote.append\
+        #(''.join(item for item in name if item not in (r"’")))
    # substitute blank spaces with hyphen.
-title_list_final = []
-for name in title_list_unnested_no_punct_no_quote:
-    title_list_final.append(re.sub(r' ',r'-',name))
+#title_list_final = []
+#for name in title_list_unnested_no_punct_no_quote:
+    #title_list_final.append(re.sub(r' ',r'-',name))
                 
