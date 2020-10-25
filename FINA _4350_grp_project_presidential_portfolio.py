@@ -180,4 +180,12 @@ transcirpt_href_list_unnested = transcript_href_list_page1 + transcirpt_href_lis
 #title_list_final = []
 #for name in title_list_unnested_no_punct_no_quote:
     #title_list_final.append(re.sub(r' ',r'-',name))
-                
+
+#Get all the article from href                
+articles = []
+for href in transcirpt_href_list_unnested:
+    article_raw = requests.get(href).text
+    article_s = BeautifulSoup(article_raw, 'lxml')
+    cleaned_article_in_paragraph = [tag.text for tag in article_s.find_all('p')]
+    article = ''.join(cleaned_article_in_paragraph)
+    articles.append(article)
