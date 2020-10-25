@@ -144,7 +144,7 @@ for web in web_list:
     clean_transcript = BeautifulSoup(r.text, 'lxml')
     title_list.append([tag.text for tag in clean_transcript.find_all('strong')])
     href_list_web = [tag.get('href') for tag in clean_transcript.find_all('a')]
-    transcirpt_href_list_p2_p33.append([element for element in href_list_web if 'https://www.rev.com/blog/transcripts/' in element]
+    transcirpt_href_list_p2_p33.append([element for element in href_list_web if 'https://www.rev.com/blog/transcripts/' in element])
 
     # remove the unnecessary titles from the list (loop): 
 for sublist in title_list:
