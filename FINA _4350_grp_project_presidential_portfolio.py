@@ -201,4 +201,4 @@ for sublist in articles_in_paragraph:
         sublist.remove('Try Rev and save time transcribing, captioning, and subtitling.')
     sublist.pop(-1)
 
-table_for_all_articles = pd.DataFrame({'Title': title_list_unnested, 'Date': date, 'Article': articles_in_paragraph})
+table_for_all_articles = pd.DataFrame({'Title': title_list_unnested, 'Date': date, 'Article in paragraphs': articles_in_paragraph, 'Article continuous': articles})
