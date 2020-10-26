@@ -184,10 +184,12 @@ transcirpt_href_list_unnested = transcript_href_list_page1 + transcirpt_href_lis
 
 #Get all the article from href                
 articles = []
+articles_in_paragraph = []
 for href in transcirpt_href_list_unnested:
     article_raw = requests.get(href).text
     article_s = BeautifulSoup(article_raw, 'lxml')
     cleaned_article_in_paragraph = [tag.text for tag in article_s.find_all('p')]
+    articles_in_paragraph.append(cleaned_article_in_paragraph)
     article = ' '.join(cleaned_article_in_paragraph)
     articles.append(article)
 
