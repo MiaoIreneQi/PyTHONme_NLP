@@ -189,3 +189,10 @@ for href in transcirpt_href_list_unnested:
     cleaned_article_in_paragraph = [tag.text for tag in article_s.find_all('p')]
     article = ' '.join(cleaned_article_in_paragraph)
     articles.append(article)
+
+date = [sublist.pop(0) for sublist in articles_in_paragraph]
+for sublist in articles_in_paragraph:
+    sublist.remove('Transcribe Your Own Content')
+    sublist.remove('Try Rev and save time transcribing, captioning, and subtitling.')
+
+table_for_all_articles = pd.DataFrame({'Title': title_list_unnested, 'Date': date, 'Article': articles_in_paragraph})
