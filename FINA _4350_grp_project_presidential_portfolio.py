@@ -25,7 +25,7 @@ cleaned_text_final_debate = [tag.text for tag in final_debate_s.find_all('p')]
 #if we come across an empty set, that is an exception with different address. 
 
 #merge text into one single file.
-single = ''.join(cleaned_text_final_debate)
+single = ' '.join(cleaned_text_final_debate)
 
 #save the transcript to file trumscript, using pickle.
 import pickle
@@ -187,5 +187,5 @@ for href in transcirpt_href_list_unnested:
     article_raw = requests.get(href).text
     article_s = BeautifulSoup(article_raw, 'lxml')
     cleaned_article_in_paragraph = [tag.text for tag in article_s.find_all('p')]
-    article = ''.join(cleaned_article_in_paragraph)
+    article = ' '.join(cleaned_article_in_paragraph)
     articles.append(article)
