@@ -195,8 +195,10 @@ for href in transcirpt_href_list_unnested:
 
 date = [sublist.pop(0) for sublist in articles_in_paragraph]
 for sublist in articles_in_paragraph:
-    sublist.remove('Transcribe Your Own Content')
-    sublist.remove(' Try Rev and save time transcribing, captioning, and subtitling.')
+    if 'Transcribe Your Own Content' in sublist:
+        sublist.remove('Transcribe Your Own Content')
+    if 'Try Rev and save time transcribing, captioning, and subtitling.' in sublist:
+        sublist.remove('Try Rev and save time transcribing, captioning, and subtitling.')
     sublist.pop(-1)
 
 table_for_all_articles = pd.DataFrame({'Title': title_list_unnested, 'Date': date, 'Article': articles_in_paragraph})
