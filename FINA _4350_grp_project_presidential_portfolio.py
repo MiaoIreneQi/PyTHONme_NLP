@@ -190,7 +190,7 @@ for href in transcirpt_href_list_unnested:
     article_s = BeautifulSoup(article_raw, 'lxml')
     cleaned_article_in_paragraph = [tag.text for tag in article_s.find_all('p')]
     articles_in_paragraph.append(cleaned_article_in_paragraph)
-    article = ' '.join(cleaned_article_in_paragraph)
+    article = '\n'.join(cleaned_article_in_paragraph)
     articles.append(article)
 
 date = [sublist.pop(0) for sublist in articles_in_paragraph]
