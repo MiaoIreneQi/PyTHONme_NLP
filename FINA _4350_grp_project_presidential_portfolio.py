@@ -189,6 +189,7 @@ for href in transcirpt_href_list_unnested:
     article_raw = requests.get(href).text
     article_s = BeautifulSoup(article_raw, 'lxml')
     cleaned_article_in_paragraph = [tag.text for tag in article_s.find_all('p')]
+    #Delelte unnecesary content if any
     if 'Transcribe Your Own Content' in cleaned_article_in_paragraph:
         cleaned_article_in_paragraph.remove('Transcribe Your Own Content')
     if ' Try Rev and save time transcribing, captioning, and subtitling.' in cleaned_article_in_paragraph:
@@ -201,4 +202,5 @@ for href in transcirpt_href_list_unnested:
 date = [sublist.pop(0) for sublist in articles_in_paragraph]
 
 table_for_all_articles = pd.DataFrame({'Title': title_list_unnested, 'Date': date, 'Article in paragraphs': articles_in_paragraph, 'Article continuous': articles})
+#Set Title column as the index column
 table_for_all_articles = table_for_all_articles.set_index('Title')
