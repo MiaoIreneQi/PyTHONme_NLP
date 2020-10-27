@@ -31,12 +31,12 @@ import pickle
 #save the transcript to file trumscript, using pickle.
 #import pickle
 
-transcript1 = regexp_tokenize(single, r'(\w+)')
-with open('transcript1.pickle','wb') as trumpscript:
-    pickle.dump(transcript1,trumpscript,pickle.HIGHEST_PROTOCOL)
+#transcript1 = regexp_tokenize(single, r'(\w+)')
+#with open('transcript1.pickle','wb') as trumpscript:
+    #pickle.dump(transcript1,trumpscript,pickle.HIGHEST_PROTOCOL)
 
-with open('transcript1.pickle','rb') as trumpscript:
-    transcript1=pickle.load(trumpscript)
+#with open('transcript1.pickle','rb') as trumpscript:
+    #transcript1=pickle.load(trumpscript)
 
     
     
