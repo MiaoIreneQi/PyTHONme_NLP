@@ -99,8 +99,7 @@ re.sub(r' ', r'-', ex_ti.lower().translate(str.maketrans('','',string.punctuatio
                    
 #twitter API
 import tweepy
-# Al t e rnat i v e l y you can load your keys from a separate t e x t f i l e ,
-# e . g . ‘ exe c ( open ( ’ . . / code¡API¡key¡tweepy . py ’ ) . read ( ) ) ‘ .
+
 access_token = "1318443538372153345-5nKY6whmlIt3ncDpHbWZOGsGUWasL7"
 access_token_secret = "9oI1XCJ9dInSp7s6HCadtgPq01Wi7XaxIsnEvJjjJObTS"
 consumer_key = "5eirheaMH6P8e50RILo0uFMxl"
