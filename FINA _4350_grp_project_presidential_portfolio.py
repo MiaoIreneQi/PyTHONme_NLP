@@ -97,16 +97,35 @@ title_list_unnested = [item for sublist in title_list for item in sublist]
 import string
 re.sub(r' ', r'-', ex_ti.lower().translate(str.maketrans('','',string.punctuation)))
                    
-#twitter API
+#Using Twitter API to find out a key word
 import tweepy
+from tweepy import OAuthHandler
+from tweepy.streaming import StreamListener
+from tweepy import Stream
 
 access_token = "1318443538372153345-5nKY6whmlIt3ncDpHbWZOGsGUWasL7"
 access_token_secret = "9oI1XCJ9dInSp7s6HCadtgPq01Wi7XaxIsnEvJjjJObTS"
 consumer_key = "5eirheaMH6P8e50RILo0uFMxl"
 consumer_secret = "C6eMpU1Ibr1n7pM0kpasR4Tf8al1LboxXqcKlFM7T9EvhvkTvA"
-auth = tweepy.OAuthHandler (consumer_key, consumer_secret)
-auth . set_access_token (access_token, access_token_secret)
-api = tweepy.API (auth)
+
+class StuOutListener(StreamListener):
+    
+    def on_data(self, data):
+        print(data)
+        return True
+    
+    def on_error(self, status):
+        print(status)
+
+if __name__ == '__main__':
+    
+    listener = StuOutListener()
+    auth = OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    
+    stream = Stream(auth, listener)
+    
+    stream.filter(track = ['Donald Trump','Joe Biden'])
 
 
 
