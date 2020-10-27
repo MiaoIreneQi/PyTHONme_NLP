@@ -201,3 +201,4 @@ for href in transcirpt_href_list_unnested:
 date = [sublist.pop(0) for sublist in articles_in_paragraph]
 
 table_for_all_articles = pd.DataFrame({'Title': title_list_unnested, 'Date': date, 'Article in paragraphs': articles_in_paragraph, 'Article continuous': articles})
+table_for_all_articles = table_for_all_articles.set_index('Title')
