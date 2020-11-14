@@ -47,55 +47,15 @@ import pickle
 #import numpy as np
 #import nltk    
 
-r = \
-    requests.get(
-        'https://www.rev.com/blog/transcript-category/donald-trump-transcripts?view=all', timeout=5)
-    
-clean_transcript_p1 = BeautifulSoup(r.text, 'lxml')
-
-tag_name_list = {tag.name for tag in clean_transcript_p1.find_all(True)}
-
-title_p1 = {tag.text for tag in clean_transcript_p1.find_all(['strong'])}
-title_p1.remove("Help Us Improve the Rev Transcript Library!")
 
 
 
 
-# loop for differnt pages
-
-address = "https://www.rev.com/blog/transcript-category/donald-trump-transcripts/page/{}?view=all"
-
-web_list = []
-for i in range (2,34):
-    web_list.append(address.format(i))
-    
-
-
-# Combination (in progress)
-for link in web_list:
-        full_web_pages = requests.get(link, timeout=5)
-        clean_full_web_page = BeautifulSoup(full_web_pages, 'lxml')
-        title_p = {tag.text for tag in clean_full_web_page.find_all(['strong'])}
-        title_p.remove("Help Us Improve the Rev Transcript Library!")
-        
-        for item in title_p:
-            address.requests(item, timeout=5)
-       
-#creat a list to contain all the titles from all the pages (loop) : 
-title_list = []
-for web in web_list:
-    title_list.append([tag.text for tag in BeautifulSoup(requests.get(web).text).find_all('strong')])
-
-#remove the unnecessary titles from the list (loop): 
-for sublist in title_list:
-    sublist.remove(''Help Us Improve the Rev Transcript Library!')
-
-#from list in list to one list.
-title_list_unnested = [item for sublist in title_list for item in sublist]
+     
 
 #remove all the punctuations from all the titles, and change then into lowercase letters. Then substitute all the spaces with '-'.
-import string
-re.sub(r' ', r'-', ex_ti.lower().translate(str.maketrans('','',string.punctuation)))
+#import string
+#re.sub(r' ', r'-', ex_ti.lower().translate(str.maketrans('','',string.punctuation)))
                    
 #Using Twitter API to find out a key word
 import tweepy
