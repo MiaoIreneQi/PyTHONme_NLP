@@ -158,22 +158,29 @@ title_p1.remove("Help Us Improve the Rev Transcript Library!")
 # Step 2.1 Creating https for turining the pages (2-33)
 address = "https://www.rev.com/blog/transcript-category/donald-trump-transcripts/page/{}?view=all"
 
+for tag in s.find_all('a'):
+    if type(tag.get('class')) == list:
+        if 'page-numbers' in tag.get('class'):
+            last_page_candidates.append(tag.text)
+
+last_page = last_page_candidates[-2]
+
 web_list = []
-for i in range (2,34):
-    web_list.append(address.format(i)) 
+for i in range (2,last_page + 1):
+    web_list.append(address.format(i))
 
 
 
-# Step 2.2 Obtaining the titles in Page 2-33
+# Step 2.2 Obtaining the titles in from Page 2 onwards
 
 title_list = []
-transcirpt_href_list_p2_p33 = []                   
+transcirpt_href_list_from_p2 = []                  
 for web in web_list:
     r = requests.get(web, timeout=5)
     clean_transcript = BeautifulSoup(r.text, 'lxml')
     title_list.append([tag.text for tag in clean_transcript.find_all('strong')])
     href_list_web = [tag.get('href') for tag in clean_transcript.find_all('a')]
-    transcirpt_href_list_p2_p33.append([element for element in href_list_web if 'https://www.rev.com/blog/transcripts/' in element])
+    transcirpt_href_list_from_p2.append([element for element in href_list_web if 'https://www.rev.com/blog/transcripts/' in element])
 
     # remove the unnecessary titles from the list (loop): 
 for sublist in title_list:
@@ -181,14 +188,14 @@ for sublist in title_list:
 
     # from list in list to one list.
 title_list_unnested = [item for sublist in title_list for item in sublist]
-transcirpt_href_list_p2_p33_unnested = [item for sublist in transcirpt_href_list_p2_p33 for item in sublist]
+transcirpt_href_list_from_p2_unnested = [item for sublist in transcirpt_href_list_from_p2 for item in sublist]
 
 
 
-# Step 2.3 Combine the title lists of page 1 and page 2-33
+# Step 2.3 Combine the title lists of page 1 and pages from page 2 onwards
 
 title_list_unnested = title_p1 + title_list_unnested
-transcirpt_href_list_unnested = transcript_href_list_page1 + transcirpt_href_list_p2_p33_unnested
+transcirpt_href_list_unnested = transcript_href_list_page1 + transcirpt_href_list_from_p2_unnested
 
 
 
