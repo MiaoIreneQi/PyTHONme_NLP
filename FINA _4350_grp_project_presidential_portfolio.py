@@ -17,37 +17,6 @@ from nltk.corpus import stopwords
 from nltk.util import ngrams
 from nltk.stem import WordNetLemmatizer
                    
-#Using Twitter API to find out a key word
-from tweepy import OAuthHandler
-from tweepy.streaming import StreamListener
-from tweepy import Stream
-
-access_token = "1318443538372153345-5nKY6whmlIt3ncDpHbWZOGsGUWasL7"
-access_token_secret = "9oI1XCJ9dInSp7s6HCadtgPq01Wi7XaxIsnEvJjjJObTS"
-consumer_key = "5eirheaMH6P8e50RILo0uFMxl"
-consumer_secret = "C6eMpU1Ibr1n7pM0kpasR4Tf8al1LboxXqcKlFM7T9EvhvkTvA"
-
-class StuOutListener(StreamListener):
-    
-    def on_data(self, data):
-        print(data)
-        return True
-    
-    def on_error(self, status):
-        print(status)
-
-if __name__ == '__main__':
-    
-    listener = StuOutListener()
-    auth = OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
-    
-    stream = Stream(auth, listener)
-    
-    stream.filter(track = ['Donald Trump','Joe Biden'])
-
-
-
 
 #### The followings are the start of our FORMAL coding lol:
 
