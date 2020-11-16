@@ -15,6 +15,7 @@ from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
 from collections import Counter
 from nltk.corpus import stopwords
 from nltk.util import ngrams
+from nltk.stem import WordNetLemmatizer
                    
 #Using Twitter API to find out a key word
 from tweepy import OAuthHandler
@@ -146,7 +147,7 @@ table_for_all_articles = table_for_all_articles.set_index('Title')
 #Preprocessing
 tokenize_list = [regexp_tokenize(article, r'\w+') 
                  for article in table_for_all_articles\
-                     ['Aricle continous']]
+                     ['Article continuous']]
 
 no_stops_collection =\
 [[t for t in article if t.lower() not in stopwords.words('english')] 
@@ -157,6 +158,10 @@ counting = [Counter(article) for article in tokenize_list]
 no_numeral = [[t for t in article if not t.isnumeric()] 
               for article in no_stops_collection]
 
-ngs = [ngrams(element, 2) for element in no_numeral]
+wnl = WordNetLemmatizer()
+
+lemmatized_counting = [Counter(article) for article in lemmatized]
+
+ngs = [ngrams(element, 2) for element in no_stops_collection]
 gram_2_list = [[' '.join(ng) for ng in element] for element in ngs]
 counting_gram_2 = [Counter(article) for article in gram_2_list]
