@@ -122,8 +122,6 @@ no_stops_collection =\
 [[t for t in article if t.lower() not in stopwords.words('english')] 
  for article in tokenize_list]
 
-counting = [Counter(article) for article in tokenize_list]
-
 no_numeral = [[t for t in article if not t.isnumeric()] 
               for article in no_stops_collection]
 
