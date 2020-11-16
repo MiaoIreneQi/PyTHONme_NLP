@@ -115,14 +115,10 @@ title_p1.remove("Help Us Improve the Rev Transcript Library!")
 
 
 
-# Step 2.1 Creating https for turining the pages (2-33)
+# Step 2.1 Creating https for turining the pages (from page 2 onwards)
 address = "https://www.rev.com/blog/transcript-category/donald-trump-transcripts/page/{}?view=all"
 
-last_page_candidates = []
-for tag in clean_transcript_p1.find_all('a'):
-    if type(tag.get('class')) == list:
-        if 'page-numbers' in tag.get('class'):
-            last_page_candidates.append(tag.text)
+last_page_candidates = [tag.text for tag in clean_transcript_p1.find_all('a', {'class' : 'page-numbers'})]
 
 last_page = int(last_page_candidates[-2])
 
