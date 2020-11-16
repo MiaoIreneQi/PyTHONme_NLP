@@ -11,54 +11,12 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
-import nltk
 from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
-import pickle
-
-# We first scrape the transcripts of Trump's past speeches.
-#transcript = 'https://www.rev.com/blog/transcripts/{}'
-#final_debate_raw = requests.get(transcript.format('donald-trump-joe-biden-final-presidential-debate-transcript-2020')).text
-
-# Obviously, we will end up with something very messy from the step above, so we do some cleaning.
-#final_debate_s = BeautifulSoup(final_debate_raw, 'lxml')
-#cleaned_text_final_debate = [tag.text for tag in final_debate_s.find_all('p')]
-
-#if we come across an empty set, that is an exception with different address. 
-
-#merge text into one single file.
-#single = ' '.join(cleaned_text_final_debate)
-
-#save the transcript to file trumscript, using pickle.
-#import pickle
-
-#transcript1 = regexp_tokenize(single, r'(\w+)')
-#with open('transcript1.pickle','wb') as trumpscript:
-    #pickle.dump(transcript1,trumpscript,pickle.HIGHEST_PROTOCOL)
-
-#with open('transcript1.pickle','rb') as trumpscript:
-    #transcript1=pickle.load(trumpscript)
-
-    
-    
-# Obtain the title of each page for page 1    
-#import requests
-#from bs4 import BeautifulSoup
-#import pandas as pd
-#import numpy as np
-#import nltk    
-
-
-
-
-
-     
-
-#remove all the punctuations from all the titles, and change then into lowercase letters. Then substitute all the spaces with '-'.
-#import string
-#re.sub(r' ', r'-', ex_ti.lower().translate(str.maketrans('','',string.punctuation)))
+from collections import Counter
+from nltk.corpus import stopwords
+from nltk.util import ngrams
                    
 #Using Twitter API to find out a key word
-import tweepy
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 from tweepy import Stream
@@ -156,24 +114,6 @@ transcirpt_href_list_unnested = transcript_href_list_page1 + transcirpt_href_lis
 
 
 
-# Step 3 Parsing the titles
-#import re
-#import string             
-   # remove punctuations and change upper case to lower case
-#title_list_unnested_no_punct = []
-#for item in title_list_unnested: 
-    #title_list_unnested_no_punct.append\
-        #(item.lower().translate(str.maketrans('','',string.punctuation)))
-   # remove quotation mark     
-#title_list_unnested_no_punct_no_quote = []
-#for name in title_list_unnested_no_punct:
-    #title_list_unnested_no_punct_no_quote.append\
-        #(''.join(item for item in name if item not in (r"’")))
-   # substitute blank spaces with hyphen.
-#title_list_final = []
-#for name in title_list_unnested_no_punct_no_quote:
-    #title_list_final.append(re.sub(r' ',r'-',name))
-
 #Get all the article from href                
 articles = []
 articles_in_paragraph = []
@@ -185,7 +125,8 @@ for href in transcirpt_href_list_unnested:
     if 'Transcribe Your Own Content' in cleaned_article_in_paragraph:
         cleaned_article_in_paragraph.remove('Transcribe Your Own Content')
     if ' Try Rev and save time transcribing, captioning, and subtitling.' in cleaned_article_in_paragraph:
-        cleaned_article_in_paragraph.remove(' Try Rev and save time transcribing, captioning, and subtitling.')
+        cleaned_article_in_paragraph.remove\
+        (' Try Rev and save time transcribing, captioning, and subtitling.')
     cleaned_article_in_paragraph.pop(-1)
     articles_in_paragraph.append(cleaned_article_in_paragraph)
     article = '\n'.join(cleaned_article_in_paragraph)
@@ -193,6 +134,29 @@ for href in transcirpt_href_list_unnested:
 
 date = [sublist.pop(0) for sublist in articles_in_paragraph]
 
-table_for_all_articles = pd.DataFrame({'Title': title_list_unnested, 'Date': date, 'Article in paragraphs': articles_in_paragraph, 'Article continuous': articles})
+table_for_all_articles = pd.DataFrame({'Title': title_list_unnested, 
+                                       'Date': date, 
+                                       'Article in paragraphs': articles_in_paragraph, 
+                                       'Article continuous': articles})
 #Set Title column as the index column
 table_for_all_articles = table_for_all_articles.set_index('Title')
+
+
+
+#Preprocessing
+tokenize_list = [regexp_tokenize(article, r'\w+') 
+                 for article in table_for_all_articles\
+                     ['Aricle continous']]
+
+no_stops_collection =\
+[[t for t in article if t.lower() not in stopwords.words('english')] 
+ for article in tokenize_list]
+
+counting = [Counter(article) for article in tokenize_list]
+
+no_numeral = [[t for t in article if not t.isnumeric()] 
+              for article in no_stops_collection]
+
+ngs = [ngrams(element, 2) for element in no_numeral]
+gram_2_list = [[' '.join(ng) for ng in element] for element in ngs]
+counting_gram_2 = [Counter(article) for article in gram_2_list]
