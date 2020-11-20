@@ -2,3 +2,10 @@ import pandas as pd
 import os
 os.chdir('/Users/jiangbinghan/Desktop/Yr4 S1/NLP in Finance and Fintech/github_jbh/PyTHONme_NLP')
 df = pd.read_csv('table for all articles_2.csv')
+
+import csv
+
+with open('table for all articles_2.csv') as csvfile:
+    data_reader = csv.reader(csvfile, delimiter=',')
+    for row in data_reader:
+        print(row[2])
