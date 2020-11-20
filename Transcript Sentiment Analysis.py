@@ -75,5 +75,6 @@ score_df = pd.DataFrame()
 for element in score_list:
     score_df = score_df.append(element, ignore_index = True)
 
+score_df.insert(loc = 0, column = 'Date', value = distinct_time)
 score_df.set_index('Date', inplace = True)
 score_df2 = score_df.reindex(t_index, fill_value = 0)
