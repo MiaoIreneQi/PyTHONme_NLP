@@ -33,7 +33,6 @@ a
 article_string=''
 article_string = article_string.join(articles)
 
-
 #turn strings into a text file -DONE
 #text_file = open('data-gensim-mycorpus.txt', 'w')
 #n = text_file.write(article_string)
@@ -50,3 +49,16 @@ article_string = article_string.join(articles)
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 sid_twitter = SentimentIntensityAnalyzer()
 sid_twitter.polarity_scores(article_string)
+
+
+
+
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sid_twitter = SentimentIntensityAnalyzer()
+score_list = []
+for article in articles:
+    score_list.append(sid_twitter.polarity_scores(article))
+    
+    
+for element in score_list:
+    score_df = score_df.append(element, ignore_index = True)
