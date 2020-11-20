@@ -11,3 +11,25 @@ with open('table for all articles_2.csv') as csvfile:
     data_reader = csv.reader(csvfile, delimiter=',')
     for row in data_reader:
         print(row[2])
+
+
+###twitter sentiment analysis
+import pandas as pd
+import numpy as np
+import csv
+
+
+twitter = []
+with open('/Users/irene/Desktop/FINA4350/group project code/into-heart-of-darkness-master/trump_20200530.csv') as csvfile:
+    data_reader = csv.reader(csvfile, delimiter=',')
+    for row in data_reader:
+        twitter.append(row[1])
+
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sid = SentimentIntensityAnalyzer()
+for sentence in twitter:
+    ss = sid.polarity_scores(sentence)
+    for k in sorted(ss):
+        print('{0}: {1}, '.format(k, ss[k]), end='')
+    print()
+    
