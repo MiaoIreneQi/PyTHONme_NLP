@@ -1,3 +1,12 @@
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sid = SentimentIntensityAnalyzer()
+for sentence in twitter:
+    ss = sid.polarity_scores(sentence)
+    for k in sorted(ss):
+        print('{0}: {1}, '.format(k, ss[k]), end='')
+    print()
+    
+
 ###twitter sentiment analysis
 import pandas as pd
 import numpy as np
