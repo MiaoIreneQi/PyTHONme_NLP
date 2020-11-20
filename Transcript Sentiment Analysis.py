@@ -3,19 +3,31 @@ import pandas as pd
 import os
 os.chdir('/Users/jiangbinghan/Desktop/Yr4 S1/NLP in Finance and Fintech/github_jbh/PyTHONme_NLP')
 df = pd.read_csv('table for all articles_2.csv')
+df = pd.read_csv('article.csv')
+
+a =[]
+a = df['0'].to_list()
+a[-1]
+a
 
 #extract articles in the csv file
-import csv
+#import csv
 
-with open('table for all articles_2.csv') as csvfile:
-    data_reader = csv.reader(csvfile, delimiter=',')
-    for row in data_reader:
-        print(row[2])
+#with open('table for all articles_2.csv') as csvfile:
+#    data_reader = csv.reader(csvfile, delimiter=',')
+#    for row in data_reader:
+#        print(row[2])
 
+#csv extract --> string
+#articles_str=''
+#with open('article.csv') as csvfile:
+#    data_reader = csv.reader(csvfile, delimiter=',')
+#    for row in data_reader:
+#        articles_str.join(row[2])
+#print(articles_str)
 
-
-articles #turn them into lists (however, the file is too big)
-articles[-1]
+#articles #turn them into lists (however, the file is too big)
+#articles[-1]
 
 #turn them into strings-DONE
 article_string=''
@@ -23,15 +35,15 @@ article_string = article_string.join(articles)
 
 
 #turn strings into a text file -DONE
-text_file = open('data-gensim-mycorpus.txt', 'w')
-n = text_file.write(article_string)
-text_file.close
+#text_file = open('data-gensim-mycorpus.txt', 'w')
+#n = text_file.write(article_string)
+#text_file.close
 
 #streaming corpus - not sure what happend here
-class MyCorpus(object):   # Class that instantiates an iterable.
-    def __iter__(self):   # Define a generator function.
-        for line in open('data-gensim-mycorpus.txt'):
-            yield line.lower().split()
+#class MyCorpus(object):   # Class that instantiates an iterable.
+#    def __iter__(self):   # Define a generator function.
+#        for line in open('data-gensim-mycorpus.txt'):
+#            yield line.lower().split()
 
 
 #sentiment analysis
