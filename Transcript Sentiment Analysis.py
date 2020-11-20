@@ -53,12 +53,27 @@ sid_twitter.polarity_scores(article_string)
 
 
 
+    
+    
+    
+tempo = table_for_all_articles.groupby('Date')['Article continuous'].apply(list)
+tempo.tolist()
+date_distinct = tempo.tolist()
+    
+date_distinct_continuous = []
+
+for element in date_distinct:
+    date_distinct_continuous.append('\n\n'.join(element))
+    
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-sid_twitter = SentimentIntensityAnalyzer()
+sid_script = SentimentIntensityAnalyzer()
 score_list = []
-for article in articles:
-    score_list.append(sid_twitter.polarity_scores(article))
-    
-    
+for article in date_distinct_continuous:
+    score_list.append(sid_script.polarity_scores(article))
+ 
+score_df = pd.DataFrame()
 for element in score_list:
     score_df = score_df.append(element, ignore_index = True)
+
+score_df.set_index('Date', inplace = True)
+score_df2 = score_df.reindex(t_index, fill_value = 0)
