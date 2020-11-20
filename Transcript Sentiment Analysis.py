@@ -77,4 +77,11 @@ for element in score_list:
 
 score_df.insert(loc = 0, column = 'Date', value = distinct_time)
 score_df.set_index('Date', inplace = True)
+t_index = pd.date_range('2017-01-03','2020-11-13')
 score_df2 = score_df.reindex(t_index, fill_value = 0)
+
+sp_500 = pd.read_excel('S&P 500 Dataset.xlsx')
+holiday_list = []
+for date in t_index:
+    if date not in sp_500['date'].to_list():
+        holiday_list.append(date)
