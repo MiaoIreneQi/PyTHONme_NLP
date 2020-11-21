@@ -88,9 +88,15 @@ for date in t_index:
         holiday_list.append(date)
 
 tweet1 = pd.read_csv('trump_20200530_clean.csv')
+tweet1.rename(columns = {'datetime' : 'Date'}, inplace = True)
+
 new_tweet = pd.read_csv('new twitter.csv')
+new_tweet_list = new_tweet['text,created_at'].to_list()
 new_tweet_date = [element[-19:-9] for element in new_tweet_list]
-new_tweet_list.insert(loc = 0, column = 'Date', value = new_tweet_date)
+new_tweet.insert(loc = 0, column = 'Date', value = new_tweet_date)
+new_tweet.rename(columns = {'text,created_at' : 'tweet'}, inplace = True)
+
+tweet_to_may_30 = tweet1[['Date', 'tweet']]
 tweet_complete = pd.concat([new_tweet,tweet_to_may_30], ignore_index= True)
 tweet_complete.sort_values(by = 'Date', ignore_index = True, inplace = True)
 tweet_complete.Date = [dt.date() for dt in tweet_complete.Date]
