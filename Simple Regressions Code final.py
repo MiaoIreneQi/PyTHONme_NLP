@@ -186,6 +186,7 @@ t_index = pd.date_range('2017-01-03','2020-11-13') #set a index with all of the 
 
 #fill in the value as nan (from numpy)
 import numpy as np
+from numpy as nan
 score_df2_script = score_df_script.reindex(t_index, fill_value = nan)
 score_df2_script.index = [dt.date() for dt in score_df2_script.index] #extract the date only (exclude the hour, minutes, seconds, microseconds)
 score_df2_script.reset_index(inplace = True)
