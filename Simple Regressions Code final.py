@@ -302,8 +302,10 @@ sentiment_combined['absolute_compound_tweet'] = sentiment_combined['compound_y']
 
 #Step 2.3 Merge sentiment scores with S&P500 dataframe
 analysis_sp500 = pd.merge(sentiment_combined, sp_500, on = 'Date')
-#Step 2.4 Merge analysis_sp500 with other industry indices dataframe
-analysis_all = pd.merge(analysis_sp500, data_new, on = 'Date')
+#Step 2.4 Merge analysis_sp500 with VIX
+analysis_vix = pd.merge(analysis_sp500, vix, on = 'Date')
+#Step 2.5 Merge analysis_sp500 with other industry indices dataframe
+analysis_all = pd.merge(analysis_vix, data_new, on = 'Date')
 
 analysis_all.rename(columns = {'S&P 500 index':'SP_500_index','percentage change' : 'percentage_change'}, inplace = True)
 
