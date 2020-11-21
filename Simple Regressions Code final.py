@@ -261,11 +261,14 @@ score_df_tweet.set_index('Date', inplace = True)
 #Use reindex to add in missing calendar date
 #fill value to nan
 import numpy as np
+from numpy import nan
 t_index = pd.date_range('2017-01-03','2020-11-13')
 score_df2_tweet = score_df_tweet.reindex(t_index, fill_value = nan)
 score_df2_tweet.index = [dt.date() for dt in score_df2_tweet.index]
-score_df2_tweet.Date = pd.to_datetime(score_df2_tweet.Date)
 
+score_df2_tweet.reset_index(inplace = True)
+score_df2_tweet.rename(columns = {'index' : 'Date'}, inplace = True) #rename the columns for future reference
+score_df2_tweet.Date = pd.to_datetime(score_df2_tweet.Date)
 ##################################################################################
 
 #RUN REGRESSIONS
