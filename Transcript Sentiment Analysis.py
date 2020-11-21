@@ -92,7 +92,7 @@ for date in t_index:
 
 tweet1 = pd.read_csv('trump_20200530_clean.csv')
 tweet1.rename(columns = {'datetime' : 'Date'}, inplace = True)
-tweet1.datetime = pd.to_datetime(tweet1.datetime)
+tweet1.Date = pd.to_datetime(tweet1.Date)
 
 new_tweet = pd.read_csv('new twitter.csv')
 new_tweet_list = new_tweet['text,created_at'].to_list()
