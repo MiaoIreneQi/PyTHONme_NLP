@@ -37,7 +37,6 @@ plt.scatter(x_4, y_2)
 
 plt.scatter(x_2, y_2)
 
-
 #sp500 pc - absolute 
 
 result = sm.ols(formula="percentage_change ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
@@ -114,3 +113,5 @@ result = sm.ols(formula="Energy_ETFVIX ~ absolute_compound_script + absolute_com
 print(result.summary())
 
 plt.scatter(x_2,y_7)
+
+#THE END OF THE REGRESSION
