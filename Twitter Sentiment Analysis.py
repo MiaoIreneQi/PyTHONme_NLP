@@ -69,8 +69,14 @@ score_df_tweet.insert(loc = 0, column = 'Date', value = distinct_time_tweet)
 
 score_df_tweet.set_index('Date', inplace = True)
 
-
-
+#reindex
+#fill value to nan 
 t_index = pd.date_range('2017-01-03','2020-11-13')
 score_df2_tweet = score_df_tweet.reindex(t_index, fill_value = nan)
+score_df2_tweet.index = [dt.date() for dt in score_df2_tweet.index]
+
+#fill value to 0
+tweet_index = pd.date_range('2017-01-03','2020-11-13')
+score_df_tweet.set_index('Date', inplace = True)
+score_df2_tweet = score_df_tweet.reindex(tweet_index, fill_value = 0)
 score_df2_tweet.index = [dt.date() for dt in score_df2_tweet.index]
