@@ -192,6 +192,7 @@ score_df2_script.index = [dt.date() for dt in score_df2_script.index] #extract t
 score_df2_script.reset_index(inplace = True)
 score_df2_script.rename(columns = {'index' : 'Date'}, inplace = True) #rename the columns for future reference
 
+sp_500 = pd.read_excel('S&P 500 Dataset.xlsx')
 #extract the holiday dates on which the market is closed (and thus there is no S&P500 data)
 holiday_list = []
 for date in t_index:
