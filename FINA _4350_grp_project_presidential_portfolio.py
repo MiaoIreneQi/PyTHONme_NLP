@@ -132,3 +132,45 @@ lemmatized_counting = [Counter(article) for article in lemmatized]
 ngs = [ngrams(element, 2) for element in no_stops_collection]
 gram_2_list = [[' '.join(ng) for ng in element] for element in ngs]
 counting_gram_2 = [Counter(article) for article in gram_2_list]
+
+
+#Analyze (mannually) selected keywords
+def word_count(word):
+    counting = []
+    for element in lemmatized_counting:
+        if word in element:
+            counting.append(element[word])
+        else:
+            counting.append(0)
+    return counting
+
+keywords = ['China', 'tariff', 'Xi', 'Putin', 'tax', 
+            'COVID', 'virus', 'fake', 'abortion', 'Russia']
+
+keyword_dic = {}
+for keyword in keywords:
+    keyword_dic[keyword] = word_count(keyword)
+
+keyword_df = pd.DataFrame([keyword_dic[keyword] for keyword in keyword_dic])
+keyword_df = keyword_df.T
+keyword_df.rename(columns = dict(zip(range(len(keywords)),keywords)), inplace = True)
+
+keyword_df.insert(loc = 0 , column = 'Date', 
+                  value = table_for_all_articles.Date.tolist())
+
+keyword_df.Date = pd.to_datetime(keyword_df.Date)
+
+def date_combine_keyword(word):
+    tempo = keyword_df.groupby('Date')[word].apply(list)
+    date_distinct = tempo.tolist()
+    date_distinct_sum = []
+
+    for element in date_distinct:
+        date_distinct_sum.append(sum(element))
+    return date_distinct_sum
+
+keyword_df2 = pd.DataFrame({keyword : date_combine_keyword(keyword) 
+                            for keyword in keywords})
+
+keyword_df2.insert(loc = 0, column = 'Date', 
+                   value = sorted(list(set(keyword_df.Date))))
