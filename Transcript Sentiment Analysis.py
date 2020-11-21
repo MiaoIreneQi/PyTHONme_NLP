@@ -56,32 +56,32 @@ sid_twitter.polarity_scores(article_string)
     
     
     
-tempo = table_for_all_articles.groupby('Date')['Article continuous'].apply(list)
-tempo.tolist()
-date_distinct = tempo.tolist()
+tempo_script = table_for_all_articles.groupby('Date')['Article continuous'].apply(list)
+tempo_script.tolist()
+date_distinct_script = tempo_script.tolist()
     
-date_distinct_continuous = []
+date_distinct_continuous_script = []
 
-for element in date_distinct:
-    date_distinct_continuous.append('\n\n'.join(element))
+for element in date_distinct_script:
+    date_distinct_continuous_script.append('\n\n'.join(element))
     
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 sid_script = SentimentIntensityAnalyzer()
-score_list = []
-for article in date_distinct_continuous:
-    score_list.append(sid_script.polarity_scores(article))
+score_list_script = []
+for article in date_distinct_continuous_script:
+    score_list_script.append(sid_script.polarity_scores(article))
  
-score_df = pd.DataFrame()
-for element in score_list:
-    score_df = score_df.append(element, ignore_index = True)
+score_df_script = pd.DataFrame()
+for element in score_list_script:
+    score_df_script = score_df_script.append(element, ignore_index = True)
 distinct_time = sorted(pd.to_datetime(list(set(table_for_all_articles['Date']))))[::-1]
 
-score_df.insert(loc = 0, column = 'Date', value = distinct_time)
-score_df.set_index('Date', inplace = True)
-score_df['Date'] = pd.to_datetime(score_df['Date'])
+score_df_script.insert(loc = 0, column = 'Date', value = distinct_time)
+score_df_script['Date'] = pd.to_datetime(score_df_script['Date'])
+score_df_script.set_index('Date', inplace = True)
 t_index = pd.date_range('2017-01-03','2020-11-13')
-score_df2 = score_df.reindex(t_index, fill_value = 0)
-score_df2.index = [dt.date() for dt in score_df2.index]
+score_df2_script = score_df_script.reindex(t_index, fill_value = 0)
+score_df2_script.index = [dt.date() for dt in score_df2_script.index]
 
 
 sp_500 = pd.read_excel('S&P 500 Dataset.xlsx')
