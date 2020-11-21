@@ -79,9 +79,18 @@ score_df.insert(loc = 0, column = 'Date', value = distinct_time)
 score_df.set_index('Date', inplace = True)
 t_index = pd.date_range('2017-01-03','2020-11-13')
 score_df2 = score_df.reindex(t_index, fill_value = 0)
+score_df2.index = [dt.date() for dt in score_df2.index]
 
 sp_500 = pd.read_excel('S&P 500 Dataset.xlsx')
 holiday_list = []
 for date in t_index:
     if date not in sp_500['date'].to_list():
         holiday_list.append(date)
+
+tweet1 = pd.read_csv('trump_20200530_clean.csv')
+new_tweet = pd.read_csv('new twitter.csv')
+new_tweet_date = [element[-19:-9] for element in new_tweet_list]
+new_tweet_list.insert(loc = 0, column = 'Date', value = new_tweet_date)
+tweet_complete = pd.concat([new_tweet,tweet_to_may_30], ignore_index= True)
+tweet_complete.sort_values(by = 'Date', ignore_index = True, inplace = True)
+tweet_complete.Date = [dt.date() for dt in tweet_complete.Date]
