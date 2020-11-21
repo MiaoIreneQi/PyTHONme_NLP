@@ -25,13 +25,24 @@ result = sm.ols(formula="index ~ compound_script + compound_tweet", data=analysi
 result = sm.ols(formula="index ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
 
 import matplotlib.pyplot as plt
+y_2 = analysis_all['percentage_change']
 y_3 = analysis_all['index']
 x_1 = analysis_all['absolute_compound_script']
 x_2 = analysis_all['absolute_compound_tweet']
+x_3 = analysis_all['compound_script']
+x_4 = analysis_all['compound_tweet']
 plt.scatter(x_2, y_3)
+
+plt.scatter(x_4, y_2)
+
+plt.scatter(x_2, y_2)
+
 
 #sp500 pc - absolute 
 
 result = sm.ols(formula="percentage_change ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+result = sm.ols(formula="percentage_change ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+result = sm.ols(formula="percentage_change ~ compound_script + compound_tweet", data=analysis_all).fit()
+
 
 print(result.summary())
