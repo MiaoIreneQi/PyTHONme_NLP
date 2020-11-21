@@ -88,28 +88,29 @@ plt.scatter(x_2,y_5)
 result = sm.ols(formula="pc_WS_housing ~ compound_script + compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
-y_5 = analysis_all['pc_Dj_public']
-plt.scatter(x_4,y_5)
+y_6 = analysis_all['pc_WS_housing']
+plt.scatter(x_4,y_6)
 
 #WS_housing , absolute_compound_script, absolute_compound_tweet
 result = sm.ols(formula="pc_WS_housing ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
 
-plt.scatter(x_2,y_5)
+plt.scatter(x_2,y_6)
 
 
-#WS_housing , compound_script, compound_tweet
-result = sm.ols(formula="pc_WS_housing ~ compound_script + compound_tweet", data=analysis_all).fit()
+
+#Energy_ETFVIX , compound_script, compound_tweet
+analysis_all.rename(columns = {'美国:能源产业ETF波动率指数' : 'Energy_ETFVIX'}, inplace = True)
+
+result = sm.ols(formula="Energy_ETFVIX ~ compound_script + compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
-y_5 = analysis_all['pc_Dj_public']
-plt.scatter(x_4,y_5)
+y_7 = analysis_all['Energy_ETFVIX']
+plt.scatter(x_4,y_7)
 
-#WS_housing , absolute_compound_script, absolute_compound_tweet
-result = sm.ols(formula="pc_WS_housing ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+#nergy_ETFVIX , absolute_compound_script, absolute_compound_tweet
+result = sm.ols(formula="Energy_ETFVIX ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
-
-plt.scatter(x_2,y_5)
-
+plt.scatter(x_2,y_7)
