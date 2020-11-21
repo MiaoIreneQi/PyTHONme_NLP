@@ -74,12 +74,15 @@ for article in date_distinct_continuous:
 score_df = pd.DataFrame()
 for element in score_list:
     score_df = score_df.append(element, ignore_index = True)
+distinct_time = sorted(pd.to_datetime(list(set(table_for_all_articles['Date']))))[::-1]
 
 score_df.insert(loc = 0, column = 'Date', value = distinct_time)
 score_df.set_index('Date', inplace = True)
+score_df['Date'] = pd.to_datetime(score_df['Date'])
 t_index = pd.date_range('2017-01-03','2020-11-13')
 score_df2 = score_df.reindex(t_index, fill_value = 0)
 score_df2.index = [dt.date() for dt in score_df2.index]
+
 
 sp_500 = pd.read_excel('S&P 500 Dataset.xlsx')
 holiday_list = []
