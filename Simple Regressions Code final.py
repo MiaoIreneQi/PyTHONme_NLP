@@ -335,9 +335,13 @@ import statsmodels.formula.api as sm
 result = sm.ols(formula="percentage_change ~ compound_script + compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
+result = sm.ols(formula="percentage_change ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+print(result.summary())
+
 #Step4.2 regression: market index (percentage change) versus the sentiment scores(absolute)
 result = sm.ols(formula="percentage_change ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
 print(result.summary())
+
 
 #Step4.3 plots
 plt.scatter(x_4, y_2) #x: compound_tweet y: percentage_change
@@ -356,6 +360,10 @@ plt.show()
 #Step5.1 regression: volatility index versus the sentiment scores(compound)
 result = sm.ols(formula="index ~ compound_script + compound_tweet", data=analysis_all).fit()
 print(result.summary())
+
+result = sm.ols(formula="index ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+print(result.summary())
+
 #Step5.2 regression: volatility index versus the sentiment scores(absolute value)
 result = sm.ols(formula="index ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
 print(result.summary())
@@ -376,6 +384,9 @@ plt.show()
 #Step6: REGRESSIONS: Dow & Jones Industrial Average Index
 #Step6.1 regression: Dow & Jones Industrial Average Index versus the sentiment scores(compound)
 result = sm.ols(formula="pc_DJ_industrial ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+result = sm.ols(formula="pc_DJ_industrial ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
 print(result.summary())
 
 #Step6.2 regression: Dow & Jones Industrial Average Index versus the sentiment scores(absolute value)
@@ -400,7 +411,10 @@ plt.show()
 result = sm.ols(formula="pc_Dj_utility ~ compound_script + compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
-#Step7.1 regression: Dow & Jones Utiltiy Average versus the sentiment scores(absolute value)
+result = sm.ols(formula="pc_Dj_utility ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+print(result.summary())
+
+#Step7.2 regression: Dow & Jones Utiltiy Average versus the sentiment scores(absolute value)
 result = sm.ols(formula="pc_Dj_utility ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
 print(result.summary())
 #########################
@@ -420,6 +434,9 @@ plt.show()
 #Step8: REGRESSIONS: Wilshire real estate index
 #Step8.1 regression: Wilshire real estate index versus the sentiment scores(compound)
 result = sm.ols(formula="pc_WS_housing ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+result = sm.ols(formula="pc_WS_housing ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
 print(result.summary())
 
 #Step8.2 regression: Wilshire real estate index versus the sentiment scores(absolute value)
@@ -443,6 +460,9 @@ plt.show()
 #Step9: REGRESSIONS: Energy ETF volatility index
 #Step9.1 regression: Energy ETF volatility index versus the sentiment scores(compound)
 result = sm.ols(formula="Energy_ETFVIX ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+result = sm.ols(formula="Energy_ETFVIX ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
 print(result.summary())
 
 #Step9.2 regression: Energy ETF volatility index versus the sentiment scores(absolute value)
