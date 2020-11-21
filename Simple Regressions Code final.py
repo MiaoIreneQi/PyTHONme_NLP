@@ -294,11 +294,11 @@ data_new.Date = pd.to_datetime(data_new.Date)
 sentiment_combined = pd.merge(score_df2_script, score_df2_tweet, on = 'Date')
 #Step 2.2 Merge sentiment scores with their absolute values
 #create columns to compute the absolute values of the compound sentiment scores for transcripts and tweets
-sentiment_combined.insert(loc=0, column = 'absolute_compound_script', value = sentiment_combined['compound_script'])
-sentiment_combined['absolute_compound_script'] = sentiment_combined['compound_script'].abs()
+sentiment_combined.insert(loc=0, column = 'absolute_compound_script', value = sentiment_combined['compound_x'])
+sentiment_combined['absolute_compound_script'] = sentiment_combined['compound_x'].abs()
 
-sentiment_combined.insert(loc=0, column = 'absolute_compound_tweet', value = sentiment_combined['compound_tweet'])
-sentiment_combined['absolute_compound_tweet'] = sentiment_combined['compound_tweet'].abs()
+sentiment_combined.insert(loc=0, column = 'absolute_compound_tweet', value = sentiment_combined['compound_y'])
+sentiment_combined['absolute_compound_tweet'] = sentiment_combined['compound_y'].abs()
 
 #Step 2.3 Merge sentiment scores with S&P500 dataframe
 analysis_sp500 = pd.merge(sentiment_combined, sp_500, on = 'Date')
