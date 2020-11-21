@@ -327,6 +327,10 @@ x_2 = analysis_all['absolute_compound_tweet']
 x_3 = analysis_all['compound_script']
 x_4 = analysis_all['compound_tweet']
 x_5 = analysis_all['Interest_rate']
+x_6 = analysis_all['pos_script']
+x_7 = analysis_all['neg_script']
+x_8 = analysis_all['pos_tweet']
+x_9 = analysis_all['net_tweet']
 
 #Step4: REGRESSIONS: market index (percentage change)
 #Step4.1 regression: market index (percentage change) versus the sentiment scores(compound)
@@ -482,5 +486,13 @@ plt.xlabel('tweet_sentiment_score(abs)')
 plt.title('regression 6.2')
 plt.show()
 
+#Step 10 Regression: positive, negative sentiment scores
+result = sm.ols(formula="percentage_change ~ pos_script + neg_script + pos_tweet + neg_tweet + Interest_rate", data=analysis_all).fit()
+print(result.summary())
+
+plt.scatter(x_6, y_2)
+plt.scatter(x_7, y_2)
+plt.scatter(x_8, y_2)
+plt.scatter(x_9, y_2) 
 #THE END OF THE REGRESSION
 ###################################################################################################
