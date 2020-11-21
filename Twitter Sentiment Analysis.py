@@ -58,10 +58,10 @@ for tweet in date_distinct_continuous_tweet:
     
 
 score_df_tweet = pd.DataFrame()
-#score_df_tweet.Date = pd.to_datetime(score_df_tweet.Date)
+
 for element in score_list_tweet:
     score_df_tweet = score_df_tweet.append(element, ignore_index = True)
-distinct_time_tweet = sorted(pd.to_datetime(list(set(tweet_complete['Date']))))[::-1]
+distinct_time_tweet = sorted(pd.to_datetime(list(set(tweet_complete['Date']))))
 
 score_df_tweet.insert(loc = 0, column = 'Date', value = distinct_time_tweet)
 
