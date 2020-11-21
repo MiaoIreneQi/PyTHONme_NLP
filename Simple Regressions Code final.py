@@ -122,13 +122,13 @@ no_stops_collection =\
 no_numeral = [[t for t in article if not t.isnumeric()]
               for article in no_stops_collection]
 
-wnl = WordNetLemmatizer()
+#wnl = WordNetLemmatizer()
 
-lemmatized_counting = [Counter(article) for article in lemmatized]
+#lemmatized_counting = [Counter(article) for article in lemmatized]
 
-ngs = [ngrams(element, 2) for element in no_stops_collection]
-gram_2_list = [[' '.join(ng) for ng in element] for element in ngs]
-counting_gram_2 = [Counter(article) for article in gram_2_list]
+#ngs = [ngrams(element, 2) for element in no_stops_collection]
+#gram_2_list = [[' '.join(ng) for ng in element] for element in ngs]
+#counting_gram_2 = [Counter(article) for article in gram_2_list]
 ###################################################################################################
 
 #object 2: Transcript Sentiment Analysis
