@@ -72,5 +72,5 @@ score_df_tweet.set_index('Date', inplace = True)
 
 
 t_index = pd.date_range('2017-01-03','2020-11-13')
-score_df2 = score_df.reindex(t_index, fill_value = 0)
-score_df2.index = [dt.date() for dt in score_df2.index]
+score_df2_tweet = score_df_tweet.reindex(t_index, fill_value = nan)
+score_df2_tweet.index = [dt.date() for dt in score_df2_tweet.index]
