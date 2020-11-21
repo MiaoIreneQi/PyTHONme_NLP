@@ -191,6 +191,7 @@ score_df2_script = score_df_script.reindex(t_index, fill_value = nan)
 score_df2_script.index = [dt.date() for dt in score_df2_script.index] #extract the date only (exclude the hour, minutes, seconds, microseconds)
 score_df2_script.reset_index(inplace = True)
 score_df2_script.rename(columns = {'index' : 'Date'}, inplace = True) #rename the columns for future reference
+score_df2_script.Date = pd.to_datetime(score_df2_script.Date)
 
 sp_500 = pd.read_excel('S&P 500 Dataset.xlsx')
 #extract the holiday dates on which the market is closed (and thus there is no S&P500 data)
@@ -263,6 +264,7 @@ import numpy as np
 t_index = pd.date_range('2017-01-03','2020-11-13')
 score_df2_tweet = score_df_tweet.reindex(t_index, fill_value = nan)
 score_df2_tweet.index = [dt.date() for dt in score_df2_tweet.index]
+score_df2_tweet.Date = pd.to_datetime(score_df2_tweet.Date)
 
 ##################################################################################
 
