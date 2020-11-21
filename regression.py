@@ -115,3 +115,56 @@ print(result.summary())
 plt.scatter(x_2,y_7)
 
 #THE END OF THE REGRESSION
+
+
+
+
+
+
+
+#########  We try ln(x) ##########
+
+import numpy as np
+analysis_all.insert(loc=0, column = 'ln_absolute_compound_script', value = analysis_all['absolute_compound_script'])
+analysis_all['ln_absolute_compound_script'] = np.log(analysis_all["absolute_compound_script"])
+
+analysis_all.insert(loc=0, column = 'ln_absolute_compound_tweet', value = analysis_all['absolute_compound_tweet'])
+analysis_all['ln_absolute_compound_tweet'] = np.log(analysis_all["absolute_compound_tweet"])
+
+x_5 = analysis_all["ln_absolute_compound_script"]
+x_6 = analysis_all["ln_absolute_compound_tweet"]
+
+result = ols("Energy_ETFVIX ~ ln_absolute_compound_script + ln_absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+fig = plt.figure(figsize=(12,8))
+plots = sm.graphics.plot_regress_exog(result, 'ln_absolute_compound_tweet',fig=fig)
+
+y_7 = analysis_all['Energy_ETFVIX']
+plt.scatter(x_6,y_7)
+
+### USELESS !!!!!!
+
+
+############# We try polynomial regression ###########
+
+analysis_all.insert(loc=0, column = 'square_compound_script', value = analysis_all['compound_script'])
+analysis_all['sq_compound_script'] = analysis_all["compound_script"]**2
+
+analysis_all.insert(loc=0, column = 'square_compound_tweet', value = analysis_all['compound_tweet'])
+analysis_all['sq_compound_tweet'] = analysis_all["compound_tweet"]**2
+
+
+result = ols("Energy_ETFVIX ~ compound_script + square_compound_script + compound_tweet + square_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+x_7 = analysis_all["square_compound_script"]
+x_8 = analysis_all["square_compound_tweet"]
+
+plt.scatter(x_8,y_7)
+
+result = ols("Energy_ETFVIX ~ square_compound_script + square_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+### USELESS !!!!!!!!
+
+
