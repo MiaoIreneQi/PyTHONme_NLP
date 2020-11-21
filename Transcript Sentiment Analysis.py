@@ -103,4 +103,4 @@ new_tweet.rename(columns = {'text,created_at' : 'tweet'}, inplace = True)
 tweet_to_may_30 = tweet1[['Date', 'tweet']]
 tweet_complete = pd.concat([new_tweet,tweet_to_may_30], ignore_index= True)
 tweet_complete.sort_values(by = 'Date', ignore_index = True, inplace = True)
-tweet_complete.Date = [dt.to_datetime().date() for dt in tweet_complete.Date]
+tweet_complete.Date = [dt.date() for dt in tweet_complete.Date]
