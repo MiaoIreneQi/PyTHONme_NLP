@@ -22,7 +22,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
 
 
-#####
+#################################################
 
 # Step 1: obtain the titles in Page 1
 
@@ -451,3 +451,4 @@ plt.title('regression 6.2')
 plt.show()
 
 #THE END OF THE REGRESSION
+###################################################################################################
