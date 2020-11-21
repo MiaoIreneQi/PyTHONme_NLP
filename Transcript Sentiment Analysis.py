@@ -82,6 +82,8 @@ score_df_script.set_index('Date', inplace = True)
 t_index = pd.date_range('2017-01-03','2020-11-13')
 score_df2_script = score_df_script.reindex(t_index, fill_value = 0)
 score_df2_script.index = [dt.date() for dt in score_df2_script.index]
+score_df2_script.reset_index(inplace = True)
+score_df2_script.rename(columns = {'index' : 'Date'}, inplace = True)
 
 
 sp_500 = pd.read_excel('S&P 500 Dataset.xlsx')
