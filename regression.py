@@ -46,3 +46,70 @@ result = sm.ols(formula="percentage_change ~ compound_script + compound_tweet", 
 
 
 print(result.summary())
+
+
+#industry index
+data_new = pd.read_excel('data_new.xlsx')
+data_new.rename(columns = {'索引' : 'index', 'Dow_Jones_工业' : 'DJ_industrial', '美国:道琼斯公用事业平均指数' : 'DJ_public', '美国:威尔希尔美国房地产投资信托市场总指数': 'WS_housing', '美国:能源产业ETF波动率指数' : 'Energy_ETFVIX'}, inplace = True)
+data_new.index.name = 'index'
+
+data_new.Date = pd.to_datetime(data_new.Date)
+analysis_all = pd.merge(analysis_all, data_new, on = 'Date')
+
+#DJ_industrial, compound_script, compound_tweet
+result = sm.ols(formula="pc_DJ_industrial ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+y_4 = analysis_all['pc_DJ_industrial']
+plt.scatter(x_4,y_4)
+
+#DJ_Industrial , absolute_compound_script, absolute_compound_tweet
+result = sm.ols(formula="pc_DJ_industrial ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+
+plt.scatter(x_2,y_4)
+
+#DJ_public , compound_script, compound_tweet
+result = sm.ols(formula="pc_Dj_public ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+y_5 = analysis_all['pc_Dj_public']
+plt.scatter(x_4,y_5)
+
+#DJ_public , absolute_compound_script, absolute_compound_tweet
+result = sm.ols(formula="pc_Dj_public ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+
+plt.scatter(x_2,y_5)
+
+#WS_housing , compound_script, compound_tweet
+result = sm.ols(formula="pc_WS_housing ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+y_5 = analysis_all['pc_Dj_public']
+plt.scatter(x_4,y_5)
+
+#WS_housing , absolute_compound_script, absolute_compound_tweet
+result = sm.ols(formula="pc_WS_housing ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+
+plt.scatter(x_2,y_5)
+
+
+#WS_housing , compound_script, compound_tweet
+result = sm.ols(formula="pc_WS_housing ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+y_5 = analysis_all['pc_Dj_public']
+plt.scatter(x_4,y_5)
+
+#WS_housing , absolute_compound_script, absolute_compound_tweet
+result = sm.ols(formula="pc_WS_housing ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+
+plt.scatter(x_2,y_5)
+
