@@ -11,6 +11,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
+from numpy import nan
 from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
 from collections import Counter
 from nltk.corpus import stopwords
@@ -174,3 +175,5 @@ keyword_df2 = pd.DataFrame({keyword : date_combine_keyword(keyword)
 
 keyword_df2.insert(loc = 0, column = 'Date', 
                    value = sorted(list(set(keyword_df.Date))))
+
+
