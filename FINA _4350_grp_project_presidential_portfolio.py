@@ -177,3 +177,137 @@ keyword_df2.insert(loc = 0, column = 'Date',
                    value = sorted(list(set(keyword_df.Date))))
 
 
+#code from David&Bruce on Nov 22
+data_new = pd.read_excel('data_new.xlsx')
+data_new.replace([0], nan, inplace = True)
+keyword_df2.set_index('Date', inplace = True)
+t_index = pd.date_range('2017-01-03','2020-11-13')
+keyword_df3 = keyword_df2.reindex(t_index, fill_value = nan)
+
+keyword_df3.reset_index(inplace = True)
+keyword_df3.rename(columns = {'index' : 'Date'}, inplace = True)
+
+
+# preparing Alibaba's data for merging
+alibaba = pd.read_excel('alibaba.xlsx')
+alibaba.Date = pd.to_datetime(alibaba.Date)
+alibaba.set_index('Date', inplace = True)
+alibaba2 = alibaba.reindex(t_index, fill_value = nan)
+alibaba2.reset_index(inplace = True)
+alibaba2.rename(columns = {'index' : 'Date'}, inplace = True)
+analysis_all = pd.merge(analysis_all, alibaba2, on = 'Date')
+
+# preparing data_new for merging
+data_new = pd.read_excel('data_new.xlsx')
+data_new.rename(columns = {'索引' : 'index', 'Dow_Jones_工业' : 'DJ_industrial', '美国:道琼斯公用事业平均指数' : 'DJ_public', '美国:威尔希尔美国房地产投资信托市场总指数': 'WS_housing', '美国:能源产业ETF波动率指数' : 'Energy_ETFVIX'}, inplace = True)
+data_new.Date = pd.to_datetime(data_new.Date)
+data_new.set_index('Date', inplace = True)
+data_new2 = data_new.reindex(t_index, fill_value = nan)
+data_new2.reset_index(inplace = True)
+data_new2.rename(columns = {'index' : 'Date'}, inplace = True)
+analysis_all = pd.merge(analysis_all, data_new2, on = 'Date')
+
+def dummy_year(year):
+    dummy = []
+    for date in analysis_all['Date'].tolist():
+        if date.year == year:
+            dummy.append(1)
+        else:
+            dummy.append(0)
+    return dummy
+
+analysis_all['dummy17'] = dummy_year(2017)
+
+analysis_all['dummy18'] = dummy_year(2018)
+
+analysis_all['dummy19'] = dummy_year(2019)
+
+analysis_all['dummy20'] = dummy_year(2020)
+
+
+
+
+import statsmodels.formula.api as sm
+import statsmodels.api as sm1
+# run DJ_industry on compund_tweet if year ==2017: 
+#we found significantly positive result! Although the magnitude is very small
+result = sm.ols(formula="pc_DJ_industrial_lead ~ compound_tweet", data=analysis_all[analysis_all['dummy17'] == 1]).fit()
+print(result.summary())
+fig = plt.figure(figsize=(12,8))
+plots = sm1.graphics.plot_regress_exog(result, 'compound_tweet',fig=fig)
+
+# run DJ_industry on compund_tweet if year ==2018: 
+#we found significantly negative result! Although the magnitude is very small
+result = sm.ols(formula="pc_DJ_industrial_lead ~ compound_tweet", data=analysis_all[analysis_all['dummy18'] == 1]).fit()
+print(result.summary())
+fig = plt.figure(figsize=(12,8))
+plots = sm1.graphics.plot_regress_exog(result, 'compound_tweet',fig=fig)
+
+# run DJ_industry on compund_tweet if year ==2019: 
+#we found insignificant result
+result = sm.ols(formula="pc_DJ_industrial_lead ~ compound_tweet", data=analysis_all[analysis_all['dummy19'] == 1]).fit()
+print(result.summary())
+
+# run DJ_industry on compund_tweet if year ==2020: 
+#we found insignificant result
+result = sm.ols(formula="pc_DJ_industrial_lead ~ compound_tweet", data=analysis_all[analysis_all['dummy20'] == 1]).fit()
+print(result.summary())
+
+keywords = ['China', 'tariff', 'Xi', 'Putin', 'tax', 
+            'COVID', 'virus', 'fake', 'abortion', 'Russia']
+
+def tweet_word_counting(word):
+    counting = []
+    for tweet in date_distinct_continuous_tweet:
+        counting.append(tweet.count(word))
+    return counting
+
+keyword_dic_tweet = {}
+for keyword in keywords:
+    keyword_dic_tweet[keyword] = tweet_word_counting(keyword)
+
+keyword_tweet_df = pd.DataFrame({keyword : keyword_dic_tweet[keyword]
+                                 for keyword in keywords}, 
+                                index = sorted(list(set(tweet_complete.Date))))
+keyword_tweet_df.index = pd.to_datetime(keyword_tweet_df.index)
+
+keyword_tweet_df2 = keyword_tweet_df.reindex(t_index, fill_value = nan)
+keyword_tweet_df2.reset_index(inplace = True)
+keyword_tweet_df2.rename(columns = {'index' : 'Date'}, inplace = True)
+
+#Merge dataframes of keywords from both script and tweets
+keyword_analysis = pd.merge(keyword_df3, keyword_tweet_df2, on = 'Date', 
+                            suffixes = ('_script', '_tweet'))
+
+analysis_all = pd.merge(analysis_all, keyword_analysis, on = 'Date')
+
+analysis_all['China_compound_script'] = analysis_all['China_script'] +\
+    analysis_all['Xi_script']
+
+analysis_all['China_compound_tweet'] = analysis_all['China_tweet'] +\
+    analysis_all['Xi_tweet']
+
+analysis_all['Russia_compound_script'] = analysis_all['Russia_script'] +\
+    analysis_all['Putin_script']
+
+analysis_all['Russia_compound_tweet'] = analysis_all['Russia_tweet'] +\
+    analysis_all['Putin_tweet']
+    
+# Regress DJ_industry_lead on number of keyword "China" in tweets and script: 
+ #significantly negative for tweet, insignificant for script
+result = sm.ols(formula="pc_DJ_industrial_lead ~ China_compound_tweet + China_compound_script", data=analysis_all).fit()
+
+# Regress DJ_industry_lead on number of keyword "China" in tweets and script 
+#in year 2019: significantly negative for tweet, significantly positive for 
+#script (smaller magnitude than tweet)
+result = sm.ols(formula="pc_DJ_industrial_lead ~ China_compound_tweet + China_compound_script", data=analysis_all[analysis_all['dummy19']==1]).fit()
+print(result.summary())
+fig = plt.figure(figsize=(12,8))
+plots = sm1.graphics.plot_regress_exog(result, 'China_compound_tweet',fig=fig)
+
+# Regress DJ_industry_lead on number of keyword "China" in tweets and script 
+#in year 2020: insignificant for both tweet and script
+result = sm.ols(formula="pc_DJ_industrial_lead ~ China_compound_tweet + China_compound_script", data=analysis_all[analysis_all['dummy20']==1]).fit()
+
+
+        
