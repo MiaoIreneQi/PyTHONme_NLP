@@ -177,7 +177,7 @@ keyword_df2.insert(loc = 0, column = 'Date',
                    value = sorted(list(set(keyword_df.Date))))
 
 
-#code from David&Bruce on Nov 22
+#########################code from David&Bruce on Nov 22##############################
 data_new = pd.read_excel('data_new.xlsx')
 data_new.replace([0], nan, inplace = True)
 keyword_df2.set_index('Date', inplace = True)
