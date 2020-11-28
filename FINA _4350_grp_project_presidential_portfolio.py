@@ -19,19 +19,7 @@ from nltk.util import ngrams
 from nltk.stem import WordNetLemmatizer
                    
 
-#### The followings are the start of our FORMAL coding lol:
-
-# Step 1: obtain the titles in Page 1
-#import requests
-#from bs4 import BeautifulSoup
-#import pandas as pd
-#import numpy as np
-#import nltk
-#from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
-                   
-r = \
-    requests.get(
-        'https://www.rev.com/blog/transcript-category/donald-trump-transcripts?view=all', timeout=5)
+r = requests.get('https://www.rev.com/blog/transcript-category/donald-trump-transcripts?view=all', timeout=5)
     
 clean_transcript_p1 = BeautifulSoup(r.text, 'lxml')
 href_list_page1 = [tag.get('href') for tag in clean_transcript_p1.find_all('a')]
