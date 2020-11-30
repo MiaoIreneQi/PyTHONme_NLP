@@ -123,7 +123,7 @@ ngs = [ngrams(element, 2) for element in no_stops_collection]
 gram_2_list = [[' '.join(ng) for ng in element] for element in ngs]
 counting_gram_2 = [Counter(article) for article in gram_2_list]
 
-################################sentiment score of speech transcripts####################################
+################################Sentiment score of speech transcripts by date####################################
 
 #group transcripts by date so that if there multiple transcripts on a single date, they will be combined as one.
 tempo_script = table_for_all_articles.groupby('Date')['Article continuous'].apply(list)
@@ -178,7 +178,14 @@ tweet_complete = pd.concat([new_tweet,tweet_to_may_30], ignore_index= True)
 tweet_complete.sort_values(by = 'Date', ignore_index = True, inplace = True)
 tweet_complete.Date = [dt.date() for dt in tweet_complete.Date]
 
-############################################sentiment score of tweets########################################
+###########################################Sentiment score of tweets by date########################################
+#group tweets by date
+tempo_tweet = tweet_complete.groupby('Date')['tweet'].apply(list)
+tempo_tweet.tolist()
+date_distinct_tweet = tempo_tweet.tolist()
+date_distinct_continuous_tweet = []
+for element in date_distinct_tweet:
+    date_distinct_continuous_tweet.append('\n\n'.join(element))
 
 
 
