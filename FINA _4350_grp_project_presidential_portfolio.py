@@ -301,8 +301,6 @@ keyword_df = pd.DataFrame({keyword : keyword_dic[keyword] for keyword in keyword
 
 keyword_df.rename(columns = dict(zip(range(len(keywords)),keywords)), inplace = True)
 
-keyword_df.insert(loc = 0 , column = 'Date', 
-                  value = table_for_all_articles.Date.tolist())
 
 keyword_df.index = pd.to_datetime(keyword_df.index)
 
