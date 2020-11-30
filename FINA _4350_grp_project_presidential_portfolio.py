@@ -353,6 +353,7 @@ analysis_all['Russia_compound_tweet'] = analysis_all['Russia_tweet'] +\
 # Regress DJ_industry_lead on number of keyword "China" in tweets and script: 
  #significantly negative for tweet, insignificant for script
 result = sm.ols(formula="pc_DJ_industrial_lead ~ China_compound_tweet + China_compound_script", data=analysis_all).fit()
+print(result.summary())
 
 # Regress DJ_industry_lead on number of keyword "China" in tweets and script 
 #in year 2019: significantly negative for tweet, significantly positive for 
@@ -365,3 +366,4 @@ plots = sm1.graphics.plot_regress_exog(result, 'China_compound_tweet',fig=fig)
 # Regress DJ_industry_lead on number of keyword "China" in tweets and script 
 #in year 2020: insignificant for both tweet and script
 result = sm.ols(formula="pc_DJ_industrial_lead ~ China_compound_tweet + China_compound_script", data=analysis_all[analysis_all['dummy20']==1]).fit()
+print(result.summary())
