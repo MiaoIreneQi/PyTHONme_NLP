@@ -231,7 +231,7 @@ analysis_all = pd.merge(analysis_all, data_new2, on = 'Date')
 
 ##############################General Regression by Stephanie, David, Irene############################################
 y_1 = analysis_all['SP_500_index']
-y_2 = analysis_all['percentage_change']
+y_2 = analysis_all['pc_sp_500']
 y_3 = analysis_all['index']
 y_4 = analysis_all['pc_DJ_industrial']
 y_5 = analysis_all['pc_Dj_utility']
@@ -248,14 +248,14 @@ x_7 = analysis_all['neg_script']
 x_8 = analysis_all['pos_tweet']
 x_9 = analysis_all['neg_tweet']
 
-result = sm.ols(formula="percentage_change ~ compound_script + compound_tweet", data=analysis_all).fit()
+result = sm.ols(formula="pc_sp_500 ~ compound_script + compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
-result = sm.ols(formula="percentage_change ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+result = sm.ols(formula="pc_sp_500 ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
 print(result.summary())
 
-#Step4.2 regression: market index (percentage change) versus the sentiment scores(absolute)
-result = sm.ols(formula="percentage_change ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+#Step4.2 regression: market index (pc_sp_500) versus the sentiment scores(absolute)
+result = sm.ols(formula="pc_sp_500 ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
 
