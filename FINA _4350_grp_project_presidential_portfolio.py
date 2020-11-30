@@ -125,14 +125,60 @@ counting_gram_2 = [Counter(article) for article in gram_2_list]
 
 ################################sentiment score of speech transcripts####################################
 
+#group transcripts by date so that if there multiple transcripts on a single date, they will be combined as one.
+tempo_script = table_for_all_articles.groupby('Date')['Article continuous'].apply(list)
+tempo_script.tolist()
+date_distinct_script = tempo_script.tolist()
+    
+date_distinct_continuous_script = []
+
+for element in date_distinct_script:
+    date_distinct_continuous_script.append('\n\n'.join(element))
+    
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sid_script = SentimentIntensityAnalyzer()
+score_list_script = []
+for article in date_distinct_continuous_script:
+    score_list_script.append(sid_script.polarity_scores(article))
+ 
+score_df_script = pd.DataFrame()
+for element in score_list_script:
+    score_df_script = score_df_script.append(element, ignore_index = True)
+distinct_time = sorted(pd.to_datetime(list(set(table_for_all_articles['Date']))))[::-1]
+
+score_df_script.insert(loc = 0, column = 'Date', value = distinct_time)
+score_df_script['Date'] = pd.to_datetime(score_df_script['Date'])
+score_df_script.set_index('Date', inplace = True)
+t_index = pd.date_range('2017-01-03','2020-11-13')
+score_df2_script = score_df_script.reindex(t_index, fill_value = 0)
+score_df2_script.index = [dt.date() for dt in score_df2_script.index]
+score_df2_script.reset_index(inplace = True)
+score_df2_script.rename(columns = {'index' : 'Date'}, inplace = True)
 
 
 
+#########################################Getting tweets##############################################
 
+#Note that the tweet files were prepared by Stephanie and Irene
 
+#read tweets from Jan 3, 2017 to May 30, 2020
+tweet1 = pd.read_csv('trump_20200530_clean.csv')
+tweet1.rename(columns = {'datetime' : 'Date'}, inplace = True)
+tweet1.Date = pd.to_datetime(tweet1.Date)
 
-####################################sentiment score of tweets##############################################
+#read tweets from May 30 onwayds
+new_tweet = pd.read_csv('new twitter.csv')
+new_tweet_list = new_tweet['text,created_at'].to_list()
+new_tweet_date = [element[-19:-9] for element in new_tweet_list]
+new_tweet.insert(loc = 0, column = 'Date', value = pd.to_datetime(new_tweet_date))
+new_tweet.rename(columns = {'text,created_at' : 'tweet'}, inplace = True)
 
+tweet_to_may_30 = tweet1[['Date', 'tweet']]
+tweet_complete = pd.concat([new_tweet,tweet_to_may_30], ignore_index= True)
+tweet_complete.sort_values(by = 'Date', ignore_index = True, inplace = True)
+tweet_complete.Date = [dt.date() for dt in tweet_complete.Date]
+
+############################################sentiment score of tweets########################################
 
 
 
