@@ -230,7 +230,7 @@ analysis_all = pd.merge(analysis_all, data_new2, on = 'Date')
 
 
 ##############################General Regression by Stephanie, David, Irene############################################
-y_1 = analysis_all['SP_500_index']
+
 y_2 = analysis_all['pc_sp_500']
 y_3 = analysis_all['index']
 y_4 = analysis_all['pc_DJ_industrial']
