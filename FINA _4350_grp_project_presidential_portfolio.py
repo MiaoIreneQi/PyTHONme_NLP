@@ -126,7 +126,7 @@ score_df_script.insert(loc = 0, column = 'Date', value = distinct_time)
 score_df_script['Date'] = pd.to_datetime(score_df_script['Date'])
 score_df_script.set_index('Date', inplace = True)
 t_index = pd.date_range('2017-01-03','2020-11-13')
-score_df2_script = score_df_script.reindex(t_index, fill_value = 0)
+score_df2_script = score_df_script.reindex(t_index, fill_value = nan)
 score_df2_script.index = [dt.date() for dt in score_df2_script.index]
 score_df2_script.reset_index(inplace = True)
 score_df2_script.rename(columns = {'index' : 'Date'}, inplace = True)
@@ -230,9 +230,13 @@ analysis_all = pd.merge(analysis_all, data_new2, on = 'Date')
 
 
 ##############################General Regression by Stephanie, David, Irene############################################
+#Get some aboslute values for regressions later
+analysis_all['absolute_compound_script'] = analysis_all['compound_script'].abs()
+analysis_all['absolute_compound_tweet'] = analysis_all['compound_tweet'].abs()
+
 
 y_2 = analysis_all['pc_sp_500']
-y_3 = analysis_all['index']
+y_3 = analysis_all['VIX']
 y_4 = analysis_all['pc_DJ_industrial']
 y_5 = analysis_all['pc_Dj_utility']
 y_6 = analysis_all['pc_WS_housing']
@@ -274,14 +278,14 @@ plt.show()
 
 #Step5: REGRESSIONS: volatility index
 #Step5.1 regression: volatility index versus the sentiment scores(compound)
-result = sm.ols(formula="index ~ compound_script + compound_tweet", data=analysis_all).fit()
+result = sm.ols(formula="VIX ~ compound_script + compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
-result = sm.ols(formula="index ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+result = sm.ols(formula="VIX ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
 print(result.summary())
 
 #Step5.2 regression: volatility index versus the sentiment scores(absolute value)
-result = sm.ols(formula="index ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+result = sm.ols(formula="VIX ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
 print(result.summary())
 
 #Step5.3 plots
