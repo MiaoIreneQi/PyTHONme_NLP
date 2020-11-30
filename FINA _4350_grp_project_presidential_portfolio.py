@@ -8,11 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 from numpy import nan
-from nltk.tokenize import regexp_tokenize
-from collections import Counter
-from nltk.corpus import stopwords
-from nltk.util import ngrams
-from nltk.stem import WordNetLemmatizer
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import statsmodels.formula.api as sm
 import statsmodels.api as sm1
 import matplotlib.pyplot as plt
