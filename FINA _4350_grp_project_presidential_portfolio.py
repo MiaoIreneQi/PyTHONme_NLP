@@ -218,10 +218,7 @@ analysis_all = pd.merge(analysis_all, vix, how = 'left')
 data_new = pd.read_excel('data_new.xlsx')
 data_new.replace([0], nan, inplace = True)
 
-
 #Preparing data_new for merging
-data_new = pd.read_excel('data_new.xlsx')
-data_new.rename(columns = {'索引' : 'index', 'Dow_Jones_工业' : 'DJ_industrial', '美国:道琼斯公用事业平均指数' : 'DJ_public', '美国:威尔希尔美国房地产投资信托市场总指数': 'WS_housing', '美国:能源产业ETF波动率指数' : 'Energy_ETFVIX'}, inplace = True)
 data_new.Date = pd.to_datetime(data_new.Date)
 data_new.set_index('Date', inplace = True)
 data_new2 = data_new.reindex(t_index, fill_value = nan)
