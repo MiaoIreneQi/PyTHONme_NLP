@@ -17,6 +17,8 @@ from collections import Counter
 from nltk.corpus import stopwords
 from nltk.util import ngrams
 from nltk.stem import WordNetLemmatizer
+import statsmodels.formula.api as sm
+import statsmodels.api as sm1
                    
 
 r = requests.get('https://www.rev.com/blog/transcript-category/donald-trump-transcripts?view=all', timeout=5)
@@ -215,8 +217,7 @@ analysis_all['dummy20'] = dummy_year(2020)
 
 
 
-import statsmodels.formula.api as sm
-import statsmodels.api as sm1
+
 # run DJ_industry on compund_tweet if year ==2017: 
 #we found significantly positive result! Although the magnitude is very small
 result = sm.ols(formula="pc_DJ_industrial_lead ~ compound_tweet", data=analysis_all[analysis_all['dummy17'] == 1]).fit()
@@ -296,6 +297,3 @@ plots = sm1.graphics.plot_regress_exog(result, 'China_compound_tweet',fig=fig)
 # Regress DJ_industry_lead on number of keyword "China" in tweets and script 
 #in year 2020: insignificant for both tweet and script
 result = sm.ols(formula="pc_DJ_industrial_lead ~ China_compound_tweet + China_compound_script", data=analysis_all[analysis_all['dummy20']==1]).fit()
-
-
-        
