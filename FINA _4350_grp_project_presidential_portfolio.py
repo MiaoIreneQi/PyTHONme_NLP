@@ -288,44 +288,28 @@ keywords = ['China', 'tariff', 'Xi', 'Putin', 'tax',
 
 def word_count(word):
     counting = []
-    for tweet in date_distinct_continuous_tweet:
-        counting.append(tweet.count(word))
+    for article in date_distinct_continuous_script:
+        counting.append(script.count(word))
     return counting
 
 keyword_dic = {}
 for keyword in keywords:
     keyword_dic[keyword] = word_count(keyword)
 
-keyword_df = pd.DataFrame([keyword_dic[keyword] for keyword in keyword_dic])
-keyword_df = keyword_df.T
+keyword_df = pd.DataFrame({keyword : keyword_dic[keyword] for keyword in keywords},
+                         index = sorted(list(set(table_for_all_articles.Date))))
+
 keyword_df.rename(columns = dict(zip(range(len(keywords)),keywords)), inplace = True)
 
 keyword_df.insert(loc = 0 , column = 'Date', 
                   value = table_for_all_articles.Date.tolist())
 
-keyword_df.Date = pd.to_datetime(keyword_df.Date)
+keyword_df.index = pd.to_datetime(keyword_df.index)
 
-def date_combine_keyword(word):
-    tempo = keyword_df.groupby('Date')[word].apply(list)
-    date_distinct = tempo.tolist()
-    date_distinct_sum = []
+keyword_df2 = keyword_df.reindex(t_index, fill_value = nan)
 
-    for element in date_distinct:
-        date_distinct_sum.append(sum(element))
-    return date_distinct_sum
-
-keyword_df2 = pd.DataFrame({keyword : date_combine_keyword(keyword) 
-                            for keyword in keywords})
-
-keyword_df2.insert(loc = 0, column = 'Date', 
-                   value = sorted(list(set(keyword_df.Date))))
-
-keyword_df2.set_index('Date', inplace = True)
-t_index = pd.date_range('2017-01-03','2020-11-13')
-keyword_df3 = keyword_df2.reindex(t_index, fill_value = nan)
-
-keyword_df3.reset_index(inplace = True)
-keyword_df3.rename(columns = {'index' : 'Date'}, inplace = True)
+keyword_df2.reset_index(inplace = True)
+keyword_df2.rename(columns = {'index' : 'Date'}, inplace = True)
 
 ##########################################Analyze (mannually) selected keywords in tweets################################################
 # Recall taht keywords = ['China', 'tariff', 'Xi', 'Putin', 'tax', 
@@ -351,7 +335,7 @@ keyword_tweet_df2.reset_index(inplace = True)
 keyword_tweet_df2.rename(columns = {'index' : 'Date'}, inplace = True)
 
 ###################################Merge dataframes of keywords for both script and tweets############################################
-keyword_analysis = pd.merge(keyword_df3, keyword_tweet_df2, on = 'Date', 
+keyword_analysis = pd.merge(keyword_df2, keyword_tweet_df2, on = 'Date', 
                             suffixes = ('_script', '_tweet'))
 
 analysis_all = pd.merge(analysis_all, keyword_analysis, on = 'Date')
