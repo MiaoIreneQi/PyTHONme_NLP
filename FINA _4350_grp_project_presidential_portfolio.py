@@ -206,12 +206,13 @@ sp_500.rename(columns = {'date' : 'Date', 'percentage change' : 'sp_500_pc'}, in
 sp_500.Date = [dt.date() for dt in sp_500.Date]
 
 vix = pd.read_excel('VIX.xlsx', sheet_name = 'Sheet1')
-vix.rename(columns = {'date' : 'Date'}, inplace = True)
+vix.rename(columns = {'date' : 'Date', 'index' : 'VIX'}, inplace = True)
 vix.Date = pd.to_datetime(vix.Date)
 
 #merge with sentiment_combined
 analysis_all = pd.merge(sp_500, sentiment_combined, on = 'Date')
-analysis_all = pd.merge(analysis_all, vix, on = 'Date')
+analysis_all.Date = pd.to_datetime(analysis_all.Date)
+analysis_all = pd.merge(analysis_all, vix, how = 'left')
 
 #########################import some indexes in data_new, prepared by Irene and Stephanie#########################
 data_new = pd.read_excel('data_new.xlsx')
