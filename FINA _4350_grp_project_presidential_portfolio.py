@@ -190,7 +190,7 @@ t_index = pd.date_range('2017-01-03','2020-11-13')
 score_df2_tweet = score_df_tweet.reindex(t_index, fill_value = nan)
 score_df2_tweet.index = [dt.date() for dt in score_df2_tweet.index]
 score_df2_tweet.reset_index(inplace = True)
-score_df2_script.rename(columns = {'index' : 'Date'}, inplace = True)
+score_df2_tweet.rename(columns = {'index' : 'Date'}, inplace = True)
 
 
 
