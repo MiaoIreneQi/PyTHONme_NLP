@@ -140,7 +140,7 @@ counting_gram_2 = [Counter(article) for article in gram_2_list]
 
 
 
-####################################combine sentiment scores of speech transcripts and tweets#############
+####################################Merge dataframes for sentiment scores of speech transcripts and tweets#############
 
 
 
