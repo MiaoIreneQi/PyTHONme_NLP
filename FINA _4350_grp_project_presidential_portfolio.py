@@ -7,15 +7,15 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import numpy as np
 from numpy import nan
-from nltk.tokenize import word_tokenize, sent_tokenize, regexp_tokenize
+from nltk.tokenize import regexp_tokenize
 from collections import Counter
 from nltk.corpus import stopwords
 from nltk.util import ngrams
 from nltk.stem import WordNetLemmatizer
 import statsmodels.formula.api as sm
 import statsmodels.api as sm1
+import matplotlib.pyplot as plt
   
 
   
@@ -101,27 +101,6 @@ table_for_all_articles = pd.DataFrame({'Title': title_list_unnested,
 #Set Title column as the index column
 table_for_all_articles = table_for_all_articles.set_index('Title')
 
-
-
-###########################################Preprocessing######################################
-tokenize_list = [regexp_tokenize(article, r'\w+') 
-                 for article in table_for_all_articles\
-                     ['Article continuous']]
-
-no_stops_collection =\
-[[t for t in article if t.lower() not in stopwords.words('english')] 
- for article in tokenize_list]
-
-no_numeral = [[t for t in article if not t.isnumeric()] 
-              for article in no_stops_collection]
-
-wnl = WordNetLemmatizer()
-
-lemmatized_counting = [Counter(article) for article in lemmatized]
-
-ngs = [ngrams(element, 2) for element in no_stops_collection]
-gram_2_list = [[' '.join(ng) for ng in element] for element in ngs]
-counting_gram_2 = [Counter(article) for article in gram_2_list]
 
 ################################Sentiment score of speech transcripts by date####################################
 
@@ -241,12 +220,7 @@ analysis_all = pd.merge(analysis_all, vix, on = 'Date')
 #########################import some indexes in data_new, prepared by Irene and Stephanie#########################
 data_new = pd.read_excel('data_new.xlsx')
 data_new.replace([0], nan, inplace = True)
-keyword_df2.set_index('Date', inplace = True)
-t_index = pd.date_range('2017-01-03','2020-11-13')
-keyword_df3 = keyword_df2.reindex(t_index, fill_value = nan)
 
-keyword_df3.reset_index(inplace = True)
-keyword_df3.rename(columns = {'index' : 'Date'}, inplace = True)
 
 #Preparing data_new for merging
 data_new = pd.read_excel('data_new.xlsx')
@@ -315,13 +289,10 @@ keywords = ['China', 'tariff', 'Xi', 'Putin', 'tax',
             'COVID', 'virus', 'fake', 'abortion', 'Russia']
 
 
-def word_count(word):
+def tweet_word_counting(word):
     counting = []
-    for element in lemmatized_counting:
-        if word in element:
-            counting.append(element[word])
-        else:
-            counting.append(0)
+    for tweet in date_distinct_continuous_tweet:
+        counting.append(tweet.count(word))
     return counting
 
 keyword_dic = {}
@@ -351,6 +322,13 @@ keyword_df2 = pd.DataFrame({keyword : date_combine_keyword(keyword)
 
 keyword_df2.insert(loc = 0, column = 'Date', 
                    value = sorted(list(set(keyword_df.Date))))
+
+keyword_df2.set_index('Date', inplace = True)
+t_index = pd.date_range('2017-01-03','2020-11-13')
+keyword_df3 = keyword_df2.reindex(t_index, fill_value = nan)
+
+keyword_df3.reset_index(inplace = True)
+keyword_df3.rename(columns = {'index' : 'Date'}, inplace = True)
 
 ##########################################Analyze (mannually) selected keywords in tweets################################################
 # Recall taht keywords = ['China', 'tariff', 'Xi', 'Putin', 'tax', 
