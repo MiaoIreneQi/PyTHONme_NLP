@@ -202,7 +202,7 @@ sentiment_combined = pd.merge(score_df2_script, score_df2_tweet, on = 'Date',
 
 #########################Import S&P 500 and Volatility Index, both prepared by Irene and Stephanie##########################
 sp_500 = pd.read_excel('S&P 500 Dataset.xlsx')
-sp_500.rename(columns = {'date' : 'Date', 'percentage change' : 'sp_500_pc'}, inplace = True)
+sp_500.rename(columns = {'date' : 'Date', 'percentage change' : 'pc_sp_500'}, inplace = True)
 sp_500.Date = [dt.date() for dt in sp_500.Date]
 
 vix = pd.read_excel('VIX.xlsx', sheet_name = 'Sheet1')
