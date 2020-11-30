@@ -232,6 +232,186 @@ data_new2.rename(columns = {'index' : 'Date'}, inplace = True)
 analysis_all = pd.merge(analysis_all, data_new2, on = 'Date')
 
 
+##############################General Regression by Stephanie, David, Irene############################################
+y_1 = analysis_all['SP_500_index']
+y_2 = analysis_all['percentage_change']
+y_3 = analysis_all['index']
+y_4 = analysis_all['pc_DJ_industrial']
+y_5 = analysis_all['pc_Dj_utility']
+y_6 = analysis_all['pc_WS_housing']
+y_7 = analysis_all['Energy_ETFVIX']
+
+x_1 = analysis_all['absolute_compound_script']
+x_2 = analysis_all['absolute_compound_tweet']
+x_3 = analysis_all['compound_script']
+x_4 = analysis_all['compound_tweet']
+x_5 = analysis_all['Interest_rate']
+x_6 = analysis_all['pos_script']
+x_7 = analysis_all['neg_script']
+x_8 = analysis_all['pos_tweet']
+x_9 = analysis_all['net_tweet']
+
+result = sm.ols(formula="percentage_change ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+result = sm.ols(formula="percentage_change ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+print(result.summary())
+
+#Step4.2 regression: market index (percentage change) versus the sentiment scores(absolute)
+result = sm.ols(formula="percentage_change ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+
+#Step4.3 plots
+plt.scatter(x_4, y_2) #x: compound_tweet y: percentage_change
+plt.ylabel('S&P500 %')
+plt.xlabel('tweet_sentiment_score')
+plt.title('regression 1.1')
+plt.show()
+
+plt.scatter(x_2, y_2)
+plt.ylabel('S&P500 %')
+plt.xlabel('tweet_sentiment_score(abs)')
+plt.title('regression 1.2')
+plt.show()
+
+#Step5: REGRESSIONS: volatility index
+#Step5.1 regression: volatility index versus the sentiment scores(compound)
+result = sm.ols(formula="index ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+result = sm.ols(formula="index ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+print(result.summary())
+
+#Step5.2 regression: volatility index versus the sentiment scores(absolute value)
+result = sm.ols(formula="index ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+#Step5.3 plots
+plt.scatter(x_4, y_3)
+plt.ylabel('Volatility Index')
+plt.xlabel('tweet_sentiment_score')
+plt.title('regression 2.1')
+plt.show()
+
+plt.scatter(x_2, y_3)
+plt.ylabel('Volatility Index')
+plt.xlabel('tweet_sentiment_score(abs)')
+plt.title('regression 2.2')
+plt.show()
+
+#Step6: REGRESSIONS: Dow & Jones Industrial Average Index
+#Step6.1 regression: Dow & Jones Industrial Average Index versus the sentiment scores(compound)
+result = sm.ols(formula="pc_DJ_industrial ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+result = sm.ols(formula="pc_DJ_industrial ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+print(result.summary())
+
+#Step6.2 regression: Dow & Jones Industrial Average Index versus the sentiment scores(absolute value)
+result = sm.ols(formula="pc_DJ_industrial ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+#Step6.3 plots
+plt.scatter(x_4, y_4)
+plt.ylabel('DJ_industrial %')
+plt.xlabel('tweet_sentiment_score')
+plt.title('regression 3.1')
+plt.show()
+
+plt.scatter(x_2, y_4)
+plt.ylabel('DJ_industrial %')
+plt.xlabel('tweet_sentiment_score(abs)')
+plt.title('regression 3.2')
+plt.show()
+
+#Step7: REGRESSIONS: Dow & Jones Utility Average
+#Step7.1 regression: Dow & Jones Utility Average versus the sentiment scores(compound)
+result = sm.ols(formula="pc_Dj_utility ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+result = sm.ols(formula="pc_Dj_utility ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+print(result.summary())
+
+#Step7.2 regression: Dow & Jones Utiltiy Average versus the sentiment scores(absolute value)
+result = sm.ols(formula="pc_Dj_utility ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+#########################
+#Step7.3 plots
+plt.scatter(x_4, y_5)
+plt.ylabel('DJ_utility %')
+plt.xlabel('tweet_sentiment_score')
+plt.title('regression 4.1')
+plt.show()
+
+plt.scatter(x_2, y_5)
+plt.ylabel('DJ_utility %')
+plt.xlabel('tweet_sentiment_score(abs)')
+plt.title('regression 4.2')
+plt.show()
+
+#Step8: REGRESSIONS: Wilshire real estate index
+#Step8.1 regression: Wilshire real estate index versus the sentiment scores(compound)
+result = sm.ols(formula="pc_WS_housing ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+result = sm.ols(formula="pc_WS_housing ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+print(result.summary())
+
+#Step8.2 regression: Wilshire real estate index versus the sentiment scores(absolute value)
+result = sm.ols(formula="pc_WS_housing ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+#Step8.3 plots
+plt.scatter(x_4, y_6)
+plt.ylabel('WS_housing %')
+plt.xlabel('tweet_sentiment_score')
+plt.title('regression 5.1')
+plt.show()
+
+plt.scatter(x_2, y_6)
+plt.ylabel('WS_housing %')
+plt.xlabel('tweet_sentiment_score(abs)')
+plt.title('regression 5.2')
+plt.show()
+
+
+#Step9: REGRESSIONS: Energy ETF volatility index
+#Step9.1 regression: Energy ETF volatility index versus the sentiment scores(compound)
+result = sm.ols(formula="Energy_ETFVIX ~ compound_script + compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+result = sm.ols(formula="Energy_ETFVIX ~ compound_script + compound_tweet + Interest_rate", data=analysis_all).fit() #plus interest rate
+print(result.summary())
+
+#Step9.2 regression: Energy ETF volatility index versus the sentiment scores(absolute value)
+result = sm.ols(formula="Energy_ETFVIX ~ absolute_compound_script + absolute_compound_tweet", data=analysis_all).fit()
+print(result.summary())
+
+#Step9.3 plots
+plt.scatter(x_4, y_6)
+plt.ylabel('Energy_ETFVIX')
+plt.xlabel('tweet_sentiment_score')
+plt.title('regression 6.1')
+plt.show()
+
+plt.scatter(x_2, y_6)
+plt.ylabel('Energy_ETFVIX')
+plt.xlabel('tweet_sentiment_score(abs)')
+plt.title('regression 6.2')
+plt.show()
+
+#Step 10 Regression: positive, negative sentiment scores
+result = sm.ols(formula="percentage_change ~ pos_script + neg_script + pos_tweet + neg_tweet + Interest_rate", data=analysis_all).fit()
+print(result.summary())
+
+plt.scatter(x_6, y_2)
+plt.scatter(x_7, y_2)
+plt.scatter(x_8, y_2)
+plt.scatter(x_9, y_2) 
+#THE END OF THE Genral REGRESSION
+
+
 
 ############################Create year dummy variable for dummy year wise regressions##############################
 def dummy_year(year):
