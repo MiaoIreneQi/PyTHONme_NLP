@@ -246,7 +246,7 @@ x_5 = analysis_all['Interest_rate']
 x_6 = analysis_all['pos_script']
 x_7 = analysis_all['neg_script']
 x_8 = analysis_all['pos_tweet']
-x_9 = analysis_all['net_tweet']
+x_9 = analysis_all['neg_tweet']
 
 result = sm.ols(formula="percentage_change ~ compound_script + compound_tweet", data=analysis_all).fit()
 print(result.summary())
