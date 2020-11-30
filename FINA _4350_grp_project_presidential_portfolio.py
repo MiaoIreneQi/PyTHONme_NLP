@@ -2,8 +2,6 @@
 # Project topic: presidential portfolio construction
 # Authors in collaboration: QI Miao Irene, CHEN Jingshu David, JIANG Binghan Stephanie, BAO Enqi Bruce
 
-# Temporary message: Hey guys, this is a python file. Please type your codes below.
-
 #Object1: main branch - web scrapping from webpage: https://www.rev.com/blog/transcript-category/donald-trump-transcripts
 
 #to start with, import packages needed. 
@@ -50,35 +48,35 @@ for i in range (2, last_page + 1):
 # Step 2.2 Obtaining the titles in from Page 2 onwards
 
 title_list = []
-transcirpt_href_list_from_p2 = []                  
+transcript_href_list_from_p2 = []                  
 for web in web_list:
     r = requests.get(web, timeout=5)
     clean_transcript = BeautifulSoup(r.text, 'lxml')
     title_list.append([tag.text for tag in clean_transcript.find_all('strong')])
     href_list_web = [tag.get('href') for tag in clean_transcript.find_all('a')]
-    transcirpt_href_list_from_p2.append([element for element in href_list_web if 'https://www.rev.com/blog/transcripts/' in element])
+    transcript_href_list_from_p2.append([element for element in href_list_web if 'https://www.rev.com/blog/transcripts/' in element])
 
-    # remove the unnecessary titles from the list (loop): 
+# remove the unnecessary titles from the list (loop): 
 for sublist in title_list:
     sublist.remove("Help Us Improve the Rev Transcript Library!")
 
-    # from list in list to one list.
+# from nested list in list to a single list.
 title_list_unnested = [item for sublist in title_list for item in sublist]
-transcirpt_href_list_from_p2_unnested = [item for sublist in transcirpt_href_list_from_p2 for item in sublist]
+transcript_href_list_from_p2_unnested = [item for sublist in transcript_href_list_from_p2 for item in sublist]
 
 
 
 # Step 2.3 Combine the title lists of page 1 and pages from page 2 onwards
 
 title_list_unnested = title_p1 + title_list_unnested
-transcirpt_href_list_unnested = transcript_href_list_page1 + transcirpt_href_list_from_p2_unnested
+transcript_href_list_unnested = transcript_href_list_page1 + transcript_href_list_from_p2_unnested
 
 
 
 #Get all the article from href                
 articles = []
 articles_in_paragraph = []
-for href in transcirpt_href_list_unnested:
+for href in transcript_href_list_unnested:
     article_raw = requests.get(href).text
     article_s = BeautifulSoup(article_raw, 'lxml')
     cleaned_article_in_paragraph = [tag.text for tag in article_s.find_all('p')]
@@ -104,7 +102,7 @@ table_for_all_articles = table_for_all_articles.set_index('Title')
 
 
 
-#Preprocessing
+###########################################Preprocessing######################################
 tokenize_list = [regexp_tokenize(article, r'\w+') 
                  for article in table_for_all_articles\
                      ['Article continuous']]
@@ -125,7 +123,7 @@ gram_2_list = [[' '.join(ng) for ng in element] for element in ngs]
 counting_gram_2 = [Counter(article) for article in gram_2_list]
 
 
-#Analyze (mannually) selected keywords
+################################Analyze (mannually) selected keywords####################################
 def word_count(word):
     counting = []
     for element in lemmatized_counting:
@@ -177,15 +175,6 @@ keyword_df3 = keyword_df2.reindex(t_index, fill_value = nan)
 keyword_df3.reset_index(inplace = True)
 keyword_df3.rename(columns = {'index' : 'Date'}, inplace = True)
 
-
-# preparing Alibaba's data for merging
-alibaba = pd.read_excel('alibaba.xlsx')
-alibaba.Date = pd.to_datetime(alibaba.Date)
-alibaba.set_index('Date', inplace = True)
-alibaba2 = alibaba.reindex(t_index, fill_value = nan)
-alibaba2.reset_index(inplace = True)
-alibaba2.rename(columns = {'index' : 'Date'}, inplace = True)
-analysis_all = pd.merge(analysis_all, alibaba2, on = 'Date')
 
 # preparing data_new for merging
 data_new = pd.read_excel('data_new.xlsx')
