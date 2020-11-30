@@ -225,6 +225,18 @@ sentiment_combined = pd.merge(score_df2_script, score_df2_tweet, on = 'Date',
                               suffixes = ('_script','_tweet'))
 
 
+#########################Import S&P 500 and Volatility Index, both prepared by Irene and Stephanie##########################
+sp_500 = pd.read_excel('S&P 500 Dataset.xlsx')
+sp_500.rename(columns = {'date' : 'Date', 'percentage change' : 'sp_500_pc}, inplace = True)
+sp_500.Date = pd.to_datetime(sp_500.Date)
+
+vix = pd.read_excel('VIX.xlsx')
+vix.rename(columns = {'date' : 'Date'}, inplace = True)
+vix.Date = pd.to_datetime(vix.Date)
+
+#merge with sentiment_combined
+analysis_all = pd.merge(sp_500, sentiment_combined, on = 'Date')
+analysis_all = pd.merge(analysis_all, vix, on = 'Date')
 
 #code from David&Bruce on Nov 22
 #########################import some indexes in data_new, prepared by Irene and Stephanie#########################
@@ -237,8 +249,7 @@ keyword_df3 = keyword_df2.reindex(t_index, fill_value = nan)
 keyword_df3.reset_index(inplace = True)
 keyword_df3.rename(columns = {'index' : 'Date'}, inplace = True)
 
-
-##########################################preparing data_new for merging#########################################
+#Preparing data_new for merging
 data_new = pd.read_excel('data_new.xlsx')
 data_new.rename(columns = {'索引' : 'index', 'Dow_Jones_工业' : 'DJ_industrial', '美国:道琼斯公用事业平均指数' : 'DJ_public', '美国:威尔希尔美国房地产投资信托市场总指数': 'WS_housing', '美国:能源产业ETF波动率指数' : 'Energy_ETFVIX'}, inplace = True)
 data_new.Date = pd.to_datetime(data_new.Date)
@@ -246,6 +257,8 @@ data_new.set_index('Date', inplace = True)
 data_new2 = data_new.reindex(t_index, fill_value = nan)
 data_new2.reset_index(inplace = True)
 data_new2.rename(columns = {'index' : 'Date'}, inplace = True)
+                         
+#merge into analysis_all
 analysis_all = pd.merge(analysis_all, data_new2, on = 'Date')
 
 
