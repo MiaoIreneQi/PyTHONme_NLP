@@ -288,7 +288,7 @@ keywords = ['China', 'tariff', 'Xi', 'Putin', 'tax',
 
 def word_count(word):
     counting = []
-    for article in date_distinct_continuous_script:
+    for script in date_distinct_continuous_script:
         counting.append(script.count(word))
     return counting
 
