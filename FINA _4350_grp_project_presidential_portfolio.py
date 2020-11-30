@@ -238,7 +238,6 @@ vix.Date = pd.to_datetime(vix.Date)
 analysis_all = pd.merge(sp_500, sentiment_combined, on = 'Date')
 analysis_all = pd.merge(analysis_all, vix, on = 'Date')
 
-#code from David&Bruce on Nov 22
 #########################import some indexes in data_new, prepared by Irene and Stephanie#########################
 data_new = pd.read_excel('data_new.xlsx')
 data_new.replace([0], nan, inplace = True)
