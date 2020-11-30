@@ -285,7 +285,7 @@ keywords = ['China', 'tariff', 'Xi', 'Putin', 'tax',
             'COVID', 'virus', 'fake', 'abortion', 'Russia']
 
 
-def tweet_word_counting(word):
+def word_count(word):
     counting = []
     for tweet in date_distinct_continuous_tweet:
         counting.append(tweet.count(word))
