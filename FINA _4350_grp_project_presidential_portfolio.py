@@ -134,13 +134,14 @@ date_distinct_continuous_script = []
 
 for element in date_distinct_script:
     date_distinct_continuous_script.append('\n\n'.join(element))
-    
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+#Getting sentiment scores
 sid_script = SentimentIntensityAnalyzer()
 score_list_script = []
 for article in date_distinct_continuous_script:
     score_list_script.append(sid_script.polarity_scores(article))
  
+#Create dataframes
 score_df_script = pd.DataFrame()
 for element in score_list_script:
     score_df_script = score_df_script.append(element, ignore_index = True)
@@ -187,7 +188,37 @@ date_distinct_continuous_tweet = []
 for element in date_distinct_tweet:
     date_distinct_continuous_tweet.append('\n\n'.join(element))
 
+#Getting sentiment scores
+sid_tweet = SentimentIntensityAnalyzer()
+score_list_tweet = []
+for tweet in date_distinct_continuous_tweet:
+    score_list_tweet.append(sid_tweet.polarity_scores(tweet))
+    
 
+#Create dataframes
+score_df_tweet = pd.DataFrame()
+
+for element in score_list_tweet:
+    score_df_tweet = score_df_tweet.append(element, ignore_index = True)
+distinct_time_tweet = sorted(pd.to_datetime(list(set(tweet_complete['Date']))))
+
+score_df_tweet.insert(loc = 0, column = 'Date', value = distinct_time_tweet)
+
+
+
+score_df_tweet.set_index('Date', inplace = True)
+
+#reindex
+#fill value to nan 
+t_index = pd.date_range('2017-01-03','2020-11-13')
+score_df2_tweet = score_df_tweet.reindex(t_index, fill_value = nan)
+score_df2_tweet.index = [dt.date() for dt in score_df2_tweet.index]
+
+#fill value to 0
+tweet_index = pd.date_range('2017-01-03','2020-11-13')
+score_df_tweet.set_index('Date', inplace = True)
+score_df2_tweet = score_df_tweet.reindex(tweet_index, fill_value = 0)
+score_df2_tweet.index = [dt.date() for dt in score_df2_tweet.index]
 
 
 
