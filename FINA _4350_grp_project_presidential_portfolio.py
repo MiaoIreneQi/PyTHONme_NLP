@@ -355,6 +355,7 @@ keyword_analysis = pd.merge(keyword_df3, keyword_tweet_df2, on = 'Date',
 
 analysis_all = pd.merge(analysis_all, keyword_analysis, on = 'Date')
 
+#######################################Combine word counts of 'China' and 'Xi' and those of 'Russia' and 'Putin
 analysis_all['China_compound_script'] = analysis_all['China_script'] +\
     analysis_all['Xi_script']
 
