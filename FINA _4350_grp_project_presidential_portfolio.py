@@ -282,7 +282,7 @@ keyword_tweet_df2 = keyword_tweet_df.reindex(t_index, fill_value = nan)
 keyword_tweet_df2.reset_index(inplace = True)
 keyword_tweet_df2.rename(columns = {'index' : 'Date'}, inplace = True)
 
-#Merge dataframes of keywords from both script and tweets
+###################################Merge dataframes of keywords for both script and tweets############################################
 keyword_analysis = pd.merge(keyword_df3, keyword_tweet_df2, on = 'Date', 
                             suffixes = ('_script', '_tweet'))
 
