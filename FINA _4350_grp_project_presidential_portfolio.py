@@ -430,6 +430,19 @@ tweet_interval_std_df = pd.DataFrame({'midpoint_of_absolute_compound_tweet_inter
 result = sm.ols(formula="std_by_interval_absolute_compound_tweet ~ midpoint_of_absolute_compound_tweet_interval", data=tweet_interval_std_df).fit()
 print(result.summary())
 
+#Preparation for plot (credit to StackOverflow)
+SMALL_SIZE = 8
+MEDIUM_SIZE = 10
+BIGGER_SIZE = 12
+
+plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
 #Plot
 plt.scatter(tweet_interval_std_df['midpoint_of_absolute_compound_tweet_interval'],
 tweet_interval_std_df['std_by_interval_absolute_compound_tweet'])
