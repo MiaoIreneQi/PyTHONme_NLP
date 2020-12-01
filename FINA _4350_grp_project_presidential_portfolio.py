@@ -7,6 +7,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+import numpy as np
 from numpy import nan
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import statsmodels.formula.api as sm
@@ -413,26 +414,6 @@ plt.scatter(x_9, y_2)
 #THE END OF THE Genral REGRESSION
 
 
-
-############################Create year dummy variable for dummy year wise regressions##############################
-def dummy_year(year):
-    dummy = []
-    for date in analysis_all['Date'].tolist():
-        if date.year == year:
-            dummy.append(1)
-        else:
-            dummy.append(0)
-    return dummy
-
-analysis_all['dummy17'] = dummy_year(2017)
-
-analysis_all['dummy18'] = dummy_year(2018)
-
-analysis_all['dummy19'] = dummy_year(2019)
-
-analysis_all['dummy20'] = dummy_year(2020)
-
-
 ##########Tweet sentiment (compound) score aboslute value intervals & correpsonding Standard Deviations of Daily S&P 500 Percentage Changes#####
 #Data Preparation
 interval = np.linspace(0,1,101)
@@ -467,6 +448,27 @@ plt.scatter(tweet_interval_std_df['midpoint_of_absolute_compound_tweet_interval'
 tweet_interval_std_df['std_by_interval_absolute_compound_tweet'])
 plt.xlabel('Midpoint of Absolute Value Compound Score Interval')
 plt.ylabel('Corresponding Standard Deviation of Daily Percentage Changes of S&P 500')
+
+
+
+############################Create year dummy variable for dummy year wise regressions##############################
+def dummy_year(year):
+    dummy = []
+    for date in analysis_all['Date'].tolist():
+        if date.year == year:
+            dummy.append(1)
+        else:
+            dummy.append(0)
+    return dummy
+
+analysis_all['dummy17'] = dummy_year(2017)
+
+analysis_all['dummy18'] = dummy_year(2018)
+
+analysis_all['dummy19'] = dummy_year(2019)
+
+analysis_all['dummy20'] = dummy_year(2020)
+
 
 
 ########################################Year wise regression of DJ industrial on sentiment scores#######################################
