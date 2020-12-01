@@ -473,30 +473,34 @@ analysis_all['dummy20'] = dummy_year(2020)
 
 
 ########################################Year wise regression of DJ industrial on sentiment scores#######################################
-
-# run DJ_industry on compund_tweet if year ==2017: 
-#we found significantly positive result! Although the magnitude is very small
+print()
+print('run DJ_industry on compund_tweet if year ==2017: ' +\
+      'we found significantly positive result! Although the magnitude is very small')
 result = sm.ols(formula="pc_DJ_industrial ~ compound_tweet", data=analysis_all[analysis_all['dummy17'] == 1]).fit()
 print(result.summary())
 fig = plt.figure(figsize=(12,8))
 plots = sm1.graphics.plot_regress_exog(result, 'compound_tweet',fig=fig)
+print()
 
-# run DJ_industry on compund_tweet if year ==2018: 
-#we found significantly negative result! Although the magnitude is very small
+print('run DJ_industry on compund_tweet if year ==2018: ' +\
+      'we found significantly negative result! Although the magnitude is very small')
 result = sm.ols(formula="pc_DJ_industrial ~ compound_tweet", data=analysis_all[analysis_all['dummy18'] == 1]).fit()
 print(result.summary())
 fig = plt.figure(figsize=(12,8))
 plots = sm1.graphics.plot_regress_exog(result, 'compound_tweet',fig=fig)
+print()
 
-# run DJ_industry on compund_tweet if year ==2019: 
-#we found insignificant result
+print('run DJ_industry on compund_tweet if year ==2019: ' +\
+      'we found insignificant result')
 result = sm.ols(formula="pc_DJ_industrial ~ compound_tweet", data=analysis_all[analysis_all['dummy19'] == 1]).fit()
 print(result.summary())
+print()
 
-# run DJ_industry on compund_tweet if year ==2020: 
-#we found insignificant result
+print('run DJ_industry on compund_tweet if year ==2020: ' +\
+      'we found insignificant result)
 result = sm.ols(formula="pc_DJ_industrial ~ compound_tweet", data=analysis_all[analysis_all['dummy20'] == 1]).fit()
 print(result.summary())
+print()
 
 
 
@@ -571,20 +575,22 @@ analysis_all['Russia_compound_tweet'] = analysis_all['Russia_tweet'] +\
 
 
 ############################################Regressions on keyword counting#################################################
-# Regress pc_DJ_industrial on number of keyword "China" in tweets and script: 
- #significantly negative for tweet, insignificant for script
+print('Regress pc_DJ_industrial on number of keyword "China" in tweets and script: '+/
+      'significantly negative for tweet, insignificant for script')
 result = sm.ols(formula="pc_DJ_industrial ~ China_compound_tweet + China_compound_script", data=analysis_all).fit()
 print(result.summary())
+print()
 
-# Regress pc_DJ_industrial on number of keyword "China" in tweets and script 
-#in year 2019: significantly negative for tweet, significantly positive for 
-#script (smaller magnitude than tweet)
+print('Regress pc_DJ_industrial on number of keyword "China" in tweets and script' +/
+      'in year 2019: significantly negative for tweet, significantly positive for' +/
+      'script (smaller magnitude than tweet)')
 result = sm.ols(formula="pc_DJ_industrial ~ China_compound_tweet + China_compound_script", data=analysis_all[analysis_all['dummy19']==1]).fit()
 print(result.summary())
 fig = plt.figure(figsize=(12,8))
 plots = sm1.graphics.plot_regress_exog(result, 'China_compound_tweet',fig=fig)
+print()
 
-# Regress pc_DJ_industrial on number of keyword "China" in tweets and script 
-#in year 2020: insignificant for both tweet and script
+print('Regress pc_DJ_industrial on number of keyword "China" in tweets and script' +/
+      'in year 2020: insignificant for both tweet and script')
 result = sm.ols(formula="pc_DJ_industrial ~ China_compound_tweet + China_compound_script", data=analysis_all[analysis_all['dummy20']==1]).fit()
 print(result.summary())
