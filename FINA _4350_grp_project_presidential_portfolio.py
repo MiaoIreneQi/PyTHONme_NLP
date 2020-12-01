@@ -407,10 +407,10 @@ plt.show()
 result = sm.ols(formula="pc_sp_500 ~ pos_script + neg_script + pos_tweet + neg_tweet + Interest_rate", data=analysis_all).fit()
 print(result.summary())
 
-plt.scatter(x_6, y_2)
-plt.scatter(x_7, y_2)
-plt.scatter(x_8, y_2)
-plt.scatter(x_9, y_2) 
+#plt.scatter(x_6, y_2)
+#plt.scatter(x_7, y_2)
+#plt.scatter(x_8, y_2)
+#plt.scatter(x_9, y_2) 
 #THE END OF THE Genral REGRESSION
 
 
