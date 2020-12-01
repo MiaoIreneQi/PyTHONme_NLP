@@ -432,6 +432,43 @@ analysis_all['dummy19'] = dummy_year(2019)
 
 analysis_all['dummy20'] = dummy_year(2020)
 
+
+##########Tweet sentiment (compound) score aboslute value intervals & correpsonding Standard Deviations of Daily S&P 500 Percentage Changes#####
+#Data Preparation
+interval = np.linspace(0,1,101)
+k = analysis_all['absolute_compound_tweet']
+midpoint = np.linspace(0.005, 0.995, 100)
+std_list = []
+for i in range(100):
+    std = analysis_all[(k>interval[i])&(k<interval[i+1])]['pc_sp_500'].std()
+    std_list.append(std)
+tweet_interval_std_df = pd.DataFrame({'midpoint_of_absolute_compound_tweet_interval' : midpoint,
+                                      'std_by_interval_absolute_compound_tweet' : std_list})
+
+#Regression
+result = sm.ols(formula="std_by_interval_absolute_compound_tweet ~ midpoint_of_absolute_compound_tweet_interval", data=tweet_interval_std_df).fit()
+print(result.summary())
+
+#Preparation for plot (credit to StackOverflow)
+SMALL_SIZE = 4
+MEDIUM_SIZE = 6
+BIGGER_SIZE = 8
+
+plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
+#Plot
+plt.scatter(tweet_interval_std_df['midpoint_of_absolute_compound_tweet_interval'],
+tweet_interval_std_df['std_by_interval_absolute_compound_tweet'])
+plt.xlabel('Midpoint of Absolute Value Compound Score Interval')
+plt.ylabel('Corresponding Standard Deviation of Daily Percentage Changes of S&P 500')
+
+
 ########################################Year wise regression of DJ industrial on sentiment scores#######################################
 
 # run DJ_industry on compund_tweet if year ==2017: 
