@@ -403,7 +403,7 @@ plt.title('regression 6.2')
 plt.show()
 
 #Step 10 Regression: positive, negative sentiment scores
-result = sm.ols(formula="percentage_change ~ pos_script + neg_script + pos_tweet + neg_tweet + Interest_rate", data=analysis_all).fit()
+result = sm.ols(formula="pc_sp_500 ~ pos_script + neg_script + pos_tweet + neg_tweet + Interest_rate", data=analysis_all).fit()
 print(result.summary())
 
 plt.scatter(x_6, y_2)
