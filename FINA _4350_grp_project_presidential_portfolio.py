@@ -497,7 +497,7 @@ print(result.summary())
 print()
 
 print('run DJ_industry on compund_tweet if year ==2020: ' +\
-      'we found insignificant result)
+      'we found insignificant result')
 result = sm.ols(formula="pc_DJ_industrial ~ compound_tweet", data=analysis_all[analysis_all['dummy20'] == 1]).fit()
 print(result.summary())
 print()
