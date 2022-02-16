@@ -1,6 +1,6 @@
 # PyTHONme_NLP
 Welcome to the project of PyTHONme. We're Stepahine, Irene, Bruce and Daivd.
-This project is for the group project requirement of the course FINA 4350, Fall 20-21, at HKU.
+This project is for the group project requirement of the course FINA 4350, Fall 20-21, at the university of Hong Kong.
 In this project, we aimed to find the connection between President Trump's remarks and the stock market.
 You may have seen a finalized python file and data sources either in csv or excel format.
 The component_code folder contains the codes that comprise the finalized python file.
